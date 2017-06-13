@@ -4,6 +4,8 @@ import {AuthService} from "../../services/auth.service";
 import {Action, Store} from "@ngrx/store";
 import {Observable} from "rxjs/Observable";
 import {
+	GET_FIREBASE_USER_ACTION,
+	GetFirebaseUserAction,
 	SIGN_IN_EMAIL_ACTION, SIGN_OUT_ACTION, SignedOutAction, SIGNUP_ACTION,
 	UserSignedInAction
 } from "../actions/authActions";
@@ -19,9 +21,11 @@ export class AuthEffectService {
 	    private store: Store<ApplicationState>
 	) {}
 
+	// This effect is triggered when the user logs into the website.
+	// Will trigger the getFirebaseUser$ effect when the user has successfully
+	// logged in.
 	@Effect() signInEmail$: Observable<Action> = this.actions$
 		.ofType(SIGN_IN_EMAIL_ACTION)
-		.do(result => console.log('The result from logginn in to firebase in effect is: ', result))
 		.switchMap(action => Observable
 			.from(
 				this.authService.login(action.payload.email, action.payload.password)
@@ -35,16 +39,42 @@ export class AuthEffectService {
 					return Observable.empty();
 				}
 			)
-		).map(response => new UserSignedInAction({
-			uid: response.uid,
+		).map(response => {
+			// Once logged in, go get the firebase instance of the user
+			return new GetFirebaseUserAction(response.uid);
+		});
+
+	// This effect gets the firebase user object from firebase.
+	// This calls the UserSignedInAction to update the user in the store.
+	@Effect() getFirebaseUser$: Observable<Action> = this.actions$
+		.ofType(GET_FIREBASE_USER_ACTION)
+		.switchMap(action => Observable
+			.from(
+				this.authService.getFirebaseUser(action.payload)
+			).catch(
+				(err) => {
+					console.log('get firebase error error: ', err);
+					this.store.dispatch(new ErrorOccurredAction({
+						type: LOGIN_ERROR,
+						message: err.message
+					}));
+					return Observable.empty();
+				}
+			)
+		)
+		.map(response => new UserSignedInAction({
+			uid: response.$key,
 			email: response.email,
 			first_name: response.first_name,
 			last_name: response.last_name,
-			first_time: response.first_time,
 			date_created: response.date_created,
-			email_verified: response.emailVerified
+			first_time: response.first_time,
+			email_confirmed: response.email_confirmed
 		}));
 
+	// This effect is called when the user signs up for an account.
+	// does not return anything currently because it is all handled
+	// in the service call.
 	@Effect({dispatch: false}) signup$: Observable<any> = this.actions$
 		.ofType(SIGNUP_ACTION)
 		.switchMap(action => Observable
@@ -68,6 +98,7 @@ export class AuthEffectService {
 			)
 		);
 
+	// An effect to handling signing out of the website.
 	@Effect() signOut$: Observable<Action> = this.actions$
 		.ofType(SIGN_OUT_ACTION)
 		.switchMap(action => this.authService.logout())

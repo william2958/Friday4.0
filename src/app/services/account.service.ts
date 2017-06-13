@@ -3,19 +3,41 @@ import {AngularFireDatabase} from "angularfire2/database";
 import {Observable} from "rxjs/Observable";
 import {FirebaseListFactoryOpts} from "angularfire2/interfaces";
 import {Account} from "../shared/models/account";
+import {CreateAccountModel} from "../shared/models/createAccount";
+import {Subject} from "rxjs/Subject";
+import {Router} from "@angular/router";
 
-export const ACCOUNTS_PAGE_SIZE = 5;
+export const ACCOUNTS_PAGE_SIZE = 50;
 
 @Injectable()
 export class AccountService {
 
 	constructor(
-		private db: AngularFireDatabase
+		private db: AngularFireDatabase,
+	    private router: Router
 	) { }
 
 	getAccounts(userKey: string) {
 		// Load the first page of accounts
 		return this.loadFirstPageAccounts(userKey, ACCOUNTS_PAGE_SIZE);
+	}
+
+	createAccount(accountData: CreateAccountModel, userKey: string) {
+		const accountsToSave = Object.assign({}, accountData, {userKey});
+		console.log('account service creating account with: ', accountData, userKey);
+		const newAccountKey = this.db.database.ref().child('accounts').push().key;
+		const dataToSave = {};
+		console.log('pushed key: ', newAccountKey);
+
+		dataToSave['accounts/' + newAccountKey] = {
+			login: accountsToSave.login,
+			password: accountsToSave.password,
+			website: accountsToSave.website,
+			date_created: (new Date).getTime()
+		};
+		dataToSave['accountsPerUser/' + userKey + '/' + newAccountKey] = accountsToSave.website;
+
+		return this.firebaseUpdate(dataToSave);
 	}
 
 	// Function to load the first page of accounts
@@ -59,6 +81,27 @@ export class AccountService {
 				});
 			})
 			.flatMap(firebaseObjectObservables => Observable.combineLatest(firebaseObjectObservables));
+	}
+
+	firebaseUpdate(dataToSave) {
+
+		const subject = new Subject();
+
+		this.db.database.ref().update(dataToSave)
+			.then(
+				val => {
+					this.router.navigate(['/', 'home', 'accounts']);
+					subject.next(val);
+					subject.complete();
+				},
+				err => {
+					subject.error(err);
+					subject.complete();
+				}
+			);
+
+		return subject.asObservable();
+
 	}
 
 }

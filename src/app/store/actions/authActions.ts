@@ -2,6 +2,7 @@ import {Action} from "@ngrx/store";
 import {User} from "../../shared/models/user";
 
 export const UPDATE_USER_ACTION = 'UPDATE_USER_ACTION';
+export const GET_FIREBASE_USER_ACTION = 'GET_FIREBASE_USER_ACTION';
 export const SIGN_IN_EMAIL_ACTION = 'SIGN_IN_EMAIL_ACTION';
 export const USER_SIGNED_IN_ACTION = 'USER_SIGNED_IN_ACTION';
 export const SIGNUP_ACTION = 'SIGNUP_ACTION';
@@ -14,6 +15,12 @@ export const SHOW_SIGNUP_MODAL_ACTION = 'SHOW_SIGNUP_MODAL_ACTION';
 export class UpdateUserAction implements Action {
 	type = UPDATE_USER_ACTION;
 	constructor(public payload?: User) { }
+}
+
+export class GetFirebaseUserAction implements Action {
+	type = GET_FIREBASE_USER_ACTION;
+	// Uid string
+	constructor(public payload?: string) { }
 }
 
 export interface SignInEmailPayload {

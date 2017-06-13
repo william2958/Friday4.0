@@ -51,7 +51,8 @@ dbData.users.forEach( user => {
 		last_name: user.last_name,
 		email: user.email,
 		first_time: user.first_time,
-		date_created: currentTime
+		date_created: currentTime,
+		email_confirmed: user.email_confirmed
 	});
 
 	user.accounts.forEach((account: any) =>  {
@@ -59,7 +60,7 @@ dbData.users.forEach( user => {
 		console.log('adding account ', account.website);
 
 		const pushedAccountKey = accountsRef.push({
-			user_name: account.user_name,
+			login: account.login,
 			website: account.website,
 			password: account.password,
 			date_created: currentTime

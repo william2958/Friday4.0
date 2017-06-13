@@ -7,6 +7,7 @@ import {Store} from "@ngrx/store";
 import {ApplicationState} from "../store/application-state";
 import {UpdateUserAction, UserSignedInAction} from "../store/actions/authActions";
 import {Router} from "@angular/router";
+import {User} from "../shared/models/user";
 
 @Injectable()
 export class AuthService {
@@ -18,9 +19,15 @@ export class AuthService {
 	    private router: Router
 	) { }
 
-	login(email, password) {
+	login(email: string, password: string) {
 
 		return this.auth.auth.signInWithEmailAndPassword(email, password);
+
+	}
+
+	getFirebaseUser(uid: string): Observable<any> {
+
+		return this.db.object('users/' + uid);
 
 	}
 

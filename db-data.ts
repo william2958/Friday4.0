@@ -5,19 +5,20 @@ export const dbData = {
 			'last_name': 'Huang',
 			'email': 'william2958@gmail.com',
 			'first_time': true,
+			'email_confirmed': true,
 			'accounts': [
 				{
-					'user_name': 'will_huang',
+					'login': 'will_huang',
 					'website': 'spotify',
 					'password': 'password123'
 				},
 				{
-					'user_name': 'william2958@gmail.com',
+					'login': 'william2958@gmail.com',
 					'website': 'facebook.com',
 					'password': 'password1234'
 				},
 				{
-					'user_name': 'will',
+					'login': 'will',
 					'website': 'fakeweb.com',
 					'password': 'helloworld'
 				}

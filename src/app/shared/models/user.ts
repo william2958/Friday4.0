@@ -5,5 +5,5 @@ export interface User {
 	last_name: string;
 	first_time: boolean;
 	date_created: number;
-	email_verified: boolean;
+	email_confirmed: boolean;
 }
