@@ -3,4 +3,5 @@ export interface Account {
 	user_name: string;
 	website: string;
 	password: string;
+	date_created: number;
 }

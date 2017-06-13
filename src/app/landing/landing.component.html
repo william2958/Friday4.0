@@ -1,3 +1,28 @@
-<h1>LANDING</h1>
+<nav-bar></nav-bar>
 
-<button (click)="login()">Log In</button>
+<div class="container">
+
+	<h1>LANDING</h1>
+	<button routerLink="home">home</button>
+
+	<form (ngSubmit)="createQuicknote()" autocomplete="off" novalidate [formGroup]="quicknoteForm">
+		<fieldset>
+			<div class="form-field">
+				<label>Email:</label>
+				<input type="text" name="email" formControlName="email">
+			</div>
+			<div class="form-field">
+				<label>Note:</label>
+				<input type="text" name="note" formControlName="note">
+			</div>
+		</fieldset>
+		<button type="submit" class="btn btn-primary">Create Quicknote</button>
+	</form>
+
+	<div *ngIf="errors$ | async as errors">
+		<div *ngFor="let error of errors">
+			Error: {{error}}
+		</div>
+	</div>
+
+</div>

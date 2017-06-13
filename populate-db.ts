@@ -15,12 +15,12 @@ console.log('WARNING Please set your own firebase config on src/environmnents/fi
 console.log('Otherwise you will get permissions errors, because the populate-db script is trying to write to my database instead of yours. ');
 console.log('Any issues please contact me, Thanks, Vasco\n\n\n');
 
-
+const userKey = 'qznIxPwjCJbgyJYVzNqAsUV8T222';
 
 initializeApp(firebaseConfig);
 
-
-const usersRef = database().ref('users');
+const mainusersRef = database().ref('users');
+const usersRef = database().ref(`users/${userKey}`);
 const accountsRef = database().ref('accounts');
 const notesRef = database().ref('notes');
 const quicknotesRef = database().ref('quicknotes');
@@ -30,7 +30,7 @@ const accountsPerUserRef = database().ref('accountsPerUser');
 const notesPerUserRef = database().ref('notesPerUser');
 const quicknotesPerUserRef = database().ref('quicknotesPerUser');
 
-usersRef.remove();
+mainusersRef.remove();
 accountsRef.remove();
 notesRef.remove();
 quicknotesRef.remove();
@@ -44,7 +44,9 @@ dbData.users.forEach( user => {
 
 	console.log('adding user', user.first_name);
 
-	const userRef = usersRef.push({
+	const userRef = {key: userKey};
+
+	usersRef.set({
 		first_name: user.first_name,
 		last_name: user.last_name,
 		email: user.email,

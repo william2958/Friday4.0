@@ -1,0 +1,21 @@
+<ul class="side-nav-list">
+	<li id="logo-container">
+		<!--<div class="userView">-->
+			<!--<div class="background">-->
+				<!--<img src="assets/images/office.jpg">-->
+			<!--</div>-->
+			<!--<a><img class="circle" src="assets/images/yuna.jpg"></a>-->
+			<!--<a><span class="white-text name">John Doe</span></a>-->
+			<!--<a><span class="white-text email">jdandturk@gmail.com</span></a>-->
+		<!--</div>-->
+		<a>
+			<img id="logo-image" src="assets/images/friday-square.svg">
+		</a>
+	</li>
+	<li><a class="waves-effect" [routerLink]="['/', 'home', 'accounts']"><i class="material-icons">lock</i>Accounts</a></li>
+	<li><a class="waves-effect" [routerLink]="['/', 'home', 'notes']"><i class="material-icons">note</i>Notes</a></li>
+	<li><div class="divider"></div></li>
+	<li><a class="waves-effect" class="subheader">Preferences</a></li>
+	<li><a>Account</a></li>
+	<li><a class="waves-effect" (click)="logout()">Log Out</a></li>
+</ul>

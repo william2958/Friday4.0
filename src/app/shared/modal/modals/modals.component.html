@@ -1,0 +1,71 @@
+<!-- Log In Modal -->
+<div #loginModal materialize="modal" [materializeParams]="[{dismissible: true, inDuration: 200}]" [materializeActions]="loginModalActions" class="modal">
+	<h4 class="modal-title title">Log In</h4>
+	<img (click)="close()" class="cancelIcon svgIcon" src="assets/images/cancel.svg"/>
+
+	<form (ngSubmit)="login()" autocomplete="off" novalidate [formGroup]="loginForm">
+		<fieldset>
+			<legend>Login</legend>
+			<div class="form-field">
+				<label>Email</label>
+				<input type="text" name="email" formControlName="email" placeholder="email">
+			</div>
+			<div class="form-field">
+				<label>Password:</label>
+				<input type="text" name="password" formControlName="password" placeholder="password">
+			</div>
+		</fieldset>
+
+		<button (click)="close()" type="button" class="btn btn-default">Close</button>
+		<button type="submit" class="btn btn-primary">Login</button>
+	</form>
+</div>
+
+<!--&lt;!&ndash; Guarded Log In Modal &ndash;&gt;-->
+<!--<div #guardedLoginModal class="modal fade" tabindex="-1">-->
+	<!--<div class="modal-dialog">-->
+		<!--<div class="modal-content">-->
+			<!--<div class="modal-header">-->
+				<!--&lt;!&ndash;<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>&ndash;&gt;-->
+				<!--<h4 class="modal-title title">Guarded Log In</h4>-->
+				<!--<img (click)="close()" class="cancelIcon svgIcon" src="assets/images/cancel.svg"/>-->
+			<!--</div>-->
+			<!--<div class="modal-body">-->
+				<!--Guarded log in-->
+			<!--</div>-->
+			<!--<div class="modal-footer">-->
+				<!--<button type="button" class="btn btn-default">Close</button>-->
+				<!--<button type="button" class="btn btn-primary">Save changes</button>-->
+			<!--</div>-->
+		<!--</div>-->
+	<!--</div>-->
+<!--</div>-->
+
+<!-- Sign Up Modal -->
+<div #signupModal materialize="modal" [materializeParams]="[{dismissible: true, inDuration: 200}]" [materializeActions]="signupModalActions" class="modal">
+	<h4 class="modal-title title">Sign Up</h4>
+	<img (click)="close()" class="cancelIcon svgIcon" src="assets/images/cancel.svg"/>
+	<form (ngSubmit)="signup()" autocomplete="off" novalidate [formGroup]="signupForm">
+		<fieldset>
+			<legend>Sign Up</legend>
+			<div class="form-field">
+				<label>Email</label>
+				<input type="text" name="email" formControlName="email">
+			</div>
+			<div class="form-field">
+				<label>First Name</label>
+				<input type="text" name="first_name" formControlName="first_name">
+			</div>
+			<div class="form-field">
+				<label>Last Name</label>
+				<input type="text" name="last_name" formControlName="last_name">
+			</div>
+			<div class="form-field">
+				<label>Password:</label>
+				<input type="text" name="password" formControlName="password">
+			</div>
+		</fieldset>
+		<button (click)="close()" type="button" class="btn btn-default">Close</button>
+		<button type="submit" class="btn btn-primary">Sign Up</button>
+	</form>
+</div>

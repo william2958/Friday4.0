@@ -1,0 +1,15 @@
+<div class="home">
+	<a (click)="shownav()" class="show-nav-button visible-sm visible-xs"><i class="material-icons">menu</i></a>
+	<router-outlet></router-outlet>
+</div>
+
+<div class="side-nav fixed hide-on-small-only">
+	<side-nav></side-nav>
+</div>
+
+<div class="side-nav fixed visible-sm visible-xs" materialize="sideNav"
+	 [materializeActions]="sidenavActions"
+	 [materializeParams]="[{edge: 'left', draggable: true}]"
+	 data-activates="sidenav" id="sidenav">
+	<side-nav></side-nav>
+</div>

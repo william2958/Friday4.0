@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { FridayComponent } from './friday.component';
@@ -21,8 +21,25 @@ import {firebaseConfig} from "../environments/firebase.config";
 import {AngularFireDatabaseModule} from "angularfire2/database";
 import {AngularFireAuthModule} from "angularfire2/auth";
 import {AuthService} from "./services/auth.service";
-import {SignInEffectService} from "./store/effects/sign-in-effect.service";
+import {AuthEffectService} from "./store/effects/auth-effect.service";
 import {EffectsModule} from "@ngrx/effects";
+import { NavComponent } from './nav/nav.component';
+import { ModalsComponent } from './shared/modal/modals/modals.component';
+import { HomeComponent } from './home/home.component';
+import {AuthGuard} from "./shared/guards/auth.guard";
+import {ToastService} from "./services/toast.service";
+import {GlobalEffectService} from "./store/effects/global-effect.service";
+import {QuicknoteService} from "./services/quicknote.service";
+import {QuicknoteEffectService} from "./store/effects/quicknote-effect.service";
+import { AccountsComponent } from './accounts/accounts.component';
+import { NotesComponent } from './notes/notes.component';
+import { SideNavComponent } from './side-nav/side-nav.component';
+import {MaterializeModule} from "angular2-materialize";
+import {AccountEffectService} from "./store/effects/account-effect.service";
+import {AccountService} from "./services/account.service";
+import { AccountComponent } from './account/account.component';
+import { NewAccountComponent } from './new-account/new-account.component';
+import {LoggedOutGuard} from "./shared/guards/logged-out.guard";
 
 export function storeReducer(state: ApplicationState, action: Action): ApplicationState {
 	return {
@@ -38,12 +55,22 @@ export function storeReducer(state: ApplicationState, action: Action): Applicati
 	declarations: [
 		FridayComponent,
 		LandingComponent,
-		Error404Component
+		Error404Component,
+		NavComponent,
+		ModalsComponent,
+		HomeComponent,
+		AccountsComponent,
+		NotesComponent,
+		SideNavComponent,
+		AccountComponent,
+		NewAccountComponent
 	],
 	imports: [
 		BrowserModule,
 		FormsModule,
+		ReactiveFormsModule,
 		HttpModule,
+		MaterializeModule,
 		RouterModule.forRoot(routes),
 		StoreModule.provideStore(
 			storeReducer,
@@ -54,12 +81,23 @@ export function storeReducer(state: ApplicationState, action: Action): Applicati
 		AngularFireModule.initializeApp(firebaseConfig),
 		AngularFireDatabaseModule,
 		AngularFireAuthModule,
-		EffectsModule.run(SignInEffectService)
+		EffectsModule.run(AuthEffectService),
+		EffectsModule.run(GlobalEffectService),
+		EffectsModule.run(QuicknoteEffectService),
+		EffectsModule.run(AccountEffectService)
 	],
 	providers: [
 		AuthService,
-		SignInEffectService
+		AuthEffectService,
+		AuthGuard,
+		LoggedOutGuard,
+		ToastService,
+		QuicknoteService,
+		AccountEffectService,
+		AccountService
 	],
 	bootstrap: [FridayComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+}

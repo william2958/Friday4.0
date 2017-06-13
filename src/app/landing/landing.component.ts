@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ApplicationState} from "../store/application-state";
 import {Store} from "@ngrx/store";
-import {AuthService} from "../services/auth.service";
-import {SignInEmailAction} from "../store/authActions";
+import {CreateQuicknoteAction} from "../store/actions/quicknoteActions";
+import {Observable} from "rxjs/Observable";
+import {QUICKNOTE_ERROR} from "../store/actions/globalActions";
 
 @Component({
 	selector: 'landing',
@@ -11,15 +13,39 @@ import {SignInEmailAction} from "../store/authActions";
 })
 export class LandingComponent implements OnInit {
 
-	constructor(private store: Store<ApplicationState>) {
+	quicknoteForm: FormGroup;
+
+	errors$: Observable<string[]>;
+
+	constructor(
+		private store: Store<ApplicationState>,
+	    private fb: FormBuilder
+	) {
+
+		this.quicknoteForm = this.fb.group({
+			email: ['william2958@gmail.com', Validators.required],
+			note: ['note', Validators.required]
+		});
+
+		this.errors$ = store.select(quicknoteErrorSelector);
 
 	}
 
 	ngOnInit() {
+
 	}
 
-	login() {
-		this.store.dispatch(new SignInEmailAction({email: 'william2958@gmail.com', password: 'password'}));
+	createQuicknote() {
+		this.store.dispatch(new CreateQuicknoteAction({
+			email: this.quicknoteForm.value.email,
+			note: this.quicknoteForm.value.note
+		}));
 	}
+
+}
+
+function quicknoteErrorSelector(state: ApplicationState): string[] {
+
+	return state.uiState.errors[QUICKNOTE_ERROR];
 
 }

@@ -1,0 +1,21 @@
+.side-nav {
+	border-right: 1px solid black;
+	height: 100%
+}
+
+#logo-image {
+	height: 90px;
+}
+
+#logo-container {
+	padding-top: 20px;
+	padding-bottom: 20px;
+	text-align: center;
+	background-color: #c3dfed;
+	margin-bottom: 10px;
+}
+
+#logo-container > a {
+	/* logo-image height */
+	height: 90px;
+}

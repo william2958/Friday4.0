@@ -1,0 +1,34 @@
+<nav class="accounts-nav">
+	<div class="nav-wrapper">
+		<a class="brand-logo center">New Account</a>
+	</div>
+</nav>
+
+<form (ngSubmit)="createAccount()" autocomplete="off" novalidate [formGroup]="createAccountForm">
+	<div class="row">
+		<div class="input-field col s12">
+			<input formControlName="website" id="website" type="text" class="validate">
+			<label for="website">Website</label>
+		</div>
+	</div>
+	<div class="row">
+		<div class="input-field col s12">
+			<input formControlName="login" id="login" type="text" class="validate">
+			<label for="login">Login</label>
+		</div>
+	</div>
+	<div class="row">
+		<div class="input-field col s12">
+			<input formControlName="password" id="password" type="password" class="validate">
+			<label for="password">Password</label>
+		</div>
+	</div>
+
+	<button type="submit">Create Account</button>
+</form>
+
+<form action="#">
+	<p class="range-field">
+		<input type="range" id="test5" min="0" max="100" />
+	</p>
+</form>
