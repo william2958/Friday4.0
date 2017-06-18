@@ -7,6 +7,7 @@ import {User} from "../models/user";
 import {Observable} from "rxjs/Observable";
 import {AngularFireAuth} from "angularfire2/auth";
 import {GetFirebaseUserAction, UpdateUserAction} from "../../store/actions/authActions";
+import {ERROR_TOAST, ShowToastAction} from "../../store/actions/globalActions";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -28,6 +29,7 @@ export class AuthGuard implements CanActivate {
 				return true;
 			}
 			// If not bring them to the landing page
+			this.store.dispatch(new ShowToastAction([ERROR_TOAST, 'User not authenticated!']));
 			this.router.navigate(['/']);
 			return false;
 		}).first();

@@ -1,6 +1,9 @@
 import {Component, ElementRef, EventEmitter, OnInit, ViewChild} from '@angular/core';
 import {Observable} from "rxjs/Observable";
-import {showGuardedLoginSelector, showLoginSelector, showSignupSelector} from "./show-selectors";
+import {
+	loginErrorsSelector, showGuardedLoginSelector, showLoginSelector, showSignupSelector,
+	signupErrorsSelector
+} from "./show-selectors";
 import {ApplicationState} from "../../../store/application-state";
 import {Store} from "@ngrx/store";
 import {SignInEmailAction, SignupAction} from "../../../store/actions/authActions";
@@ -22,13 +25,11 @@ declare const jQuery: any;
 })
 export class ModalsComponent implements OnInit {
 
-	@ViewChild('loginModal') loginEl: ElementRef;
-	@ViewChild('signupModal') signupEl: ElementRef;
-	@ViewChild('guardedLoginModal') guardedLoginEl: ElementRef;
-
 	showLoginModal$: Observable<boolean>;
-	showGuardedLoginModal$: Observable<boolean>;
 	showSignupModal$: Observable<boolean>;
+
+	loginErrors$: Observable<string[]>;
+	signupErrors$: Observable<string[]>;
 
 	loginForm: FormGroup;
 	signupForm: FormGroup;
@@ -44,7 +45,6 @@ export class ModalsComponent implements OnInit {
 	    private fb: FormBuilder
 	) {
 		this.showLoginModal$ = this.store.select(showLoginSelector).skip(1);
-		this.showGuardedLoginModal$ = this.store.select(showGuardedLoginSelector).skip(1);
 		this.showSignupModal$ = this.store.select(showSignupSelector).skip(1);
 
 		this.loginForm = this.fb.group({
@@ -65,26 +65,18 @@ export class ModalsComponent implements OnInit {
 
 		this.showLoginModal$.subscribe(
 			() => {
-				// jQuery(this.loginEl.nativeElement).modal('hide');
-				// jQuery(this.loginEl.nativeElement).modal('show');
 				this.loginModalActions.emit({action: 'modal', params: ['open']});
-			}
-		);
-
-		this.showGuardedLoginModal$.subscribe(
-			() => {
-				jQuery(this.guardedLoginEl.nativeElement).modal('hide');
-				jQuery(this.guardedLoginEl.nativeElement).modal('show');
 			}
 		);
 
 		this.showSignupModal$.subscribe(
 			() => {
-				// jQuery(this.signupEl.nativeElement).modal('hide');
-				// jQuery(this.signupEl.nativeElement).modal('show');
 				this.signupModalActions.emit({action: 'modal', params: ['open']});
 			}
 		);
+
+		this.loginErrors$ = this.store.select(loginErrorsSelector);
+		this.signupErrors$ = this.store.select(signupErrorsSelector);
 
 	}
 
@@ -100,7 +92,6 @@ export class ModalsComponent implements OnInit {
 			user => {
 				if (user) {
 					console.log('login successful');
-					// jQuery(this.loginEl.nativeElement).modal('hide');
 					this.loginModalActions.emit({action: 'modal', params: ['close']});
 					this.loginForm.reset();
 					this.store.dispatch(new ShowToastAction([SUCCESS_TOAST, 'Login Successful!']));
@@ -122,8 +113,6 @@ export class ModalsComponent implements OnInit {
 			user => {
 				console.log('updated from signup', user);
 				if (user) {
-
-					// jQuery(this.signupEl.nativeElement).modal('hide');
 					this.signupModalActions.emit({action: 'modal', params: ['close']});
 					this.signupForm.reset();
 					this.store.dispatch(new ShowToastAction([SUCCESS_TOAST, 'Signup Successful!']));
@@ -135,7 +124,6 @@ export class ModalsComponent implements OnInit {
 
 	close() {
 		this.loginModalActions.emit({action: 'modal', params: ['close']});
-		// jQuery(this.guardedLoginEl.nativeElement).modal('hide');
 		this.signupModalActions.emit({action: 'modal', params: ['close']});
 	}
 

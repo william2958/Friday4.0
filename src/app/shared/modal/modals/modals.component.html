@@ -3,48 +3,39 @@
 	<h4 class="modal-title title">Log In</h4>
 	<img (click)="close()" class="cancelIcon svgIcon" src="assets/images/cancel.svg"/>
 
+	<div *ngIf="(loginErrors$ | async)?.length > 0">
+		Errors: {{loginErrors$ | async}}
+	</div>
+
 	<form (ngSubmit)="login()" autocomplete="off" novalidate [formGroup]="loginForm">
-		<fieldset>
-			<legend>Login</legend>
-			<div class="form-field">
-				<label>Email</label>
-				<input type="text" name="email" formControlName="email" placeholder="email">
+		<h2>Login</h2>
+		<div class="row">
+			<div class="input-field col s12">
+				<input type="text" id="loginEmail" name="email" formControlName="email">
+				<label for="loginEmail">Email</label>
 			</div>
-			<div class="form-field">
-				<label>Password:</label>
-				<input type="text" name="password" formControlName="password" placeholder="password">
+		</div>
+		<div class="row">
+			<div class="input-field col s12">
+				<input type="text" class="validate" id="loginPassword" name="password" formControlName="password">
+				<label for="loginPassword">Password:</label>
 			</div>
-		</fieldset>
+		</div>
 
 		<button (click)="close()" type="button" class="btn btn-default">Close</button>
 		<button type="submit" class="btn btn-primary">Login</button>
 	</form>
 </div>
 
-<!--&lt;!&ndash; Guarded Log In Modal &ndash;&gt;-->
-<!--<div #guardedLoginModal class="modal fade" tabindex="-1">-->
-	<!--<div class="modal-dialog">-->
-		<!--<div class="modal-content">-->
-			<!--<div class="modal-header">-->
-				<!--&lt;!&ndash;<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>&ndash;&gt;-->
-				<!--<h4 class="modal-title title">Guarded Log In</h4>-->
-				<!--<img (click)="close()" class="cancelIcon svgIcon" src="assets/images/cancel.svg"/>-->
-			<!--</div>-->
-			<!--<div class="modal-body">-->
-				<!--Guarded log in-->
-			<!--</div>-->
-			<!--<div class="modal-footer">-->
-				<!--<button type="button" class="btn btn-default">Close</button>-->
-				<!--<button type="button" class="btn btn-primary">Save changes</button>-->
-			<!--</div>-->
-		<!--</div>-->
-	<!--</div>-->
-<!--</div>-->
-
 <!-- Sign Up Modal -->
 <div #signupModal materialize="modal" [materializeParams]="[{dismissible: true, inDuration: 200}]" [materializeActions]="signupModalActions" class="modal">
 	<h4 class="modal-title title">Sign Up</h4>
 	<img (click)="close()" class="cancelIcon svgIcon" src="assets/images/cancel.svg"/>
+
+	<div *ngIf="(signupErrors$ | async)?.length > 0">
+		Errors: {{signupErrors$ | async}}
+	</div>
+
 	<form (ngSubmit)="signup()" autocomplete="off" novalidate [formGroup]="signupForm">
 		<fieldset>
 			<legend>Sign Up</legend>

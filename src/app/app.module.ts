@@ -40,6 +40,7 @@ import {AccountService} from "./services/account.service";
 import { AccountComponent } from './account/account.component';
 import { NewAccountComponent } from './new-account/new-account.component';
 import {LoggedOutGuard} from "./shared/guards/logged-out.guard";
+import { AccountDetailComponent } from './account-detail/account-detail.component';
 
 export function storeReducer(state: ApplicationState, action: Action): ApplicationState {
 	return {
@@ -63,7 +64,8 @@ export function storeReducer(state: ApplicationState, action: Action): Applicati
 		NotesComponent,
 		SideNavComponent,
 		AccountComponent,
-		NewAccountComponent
+		NewAccountComponent,
+		AccountDetailComponent
 	],
 	imports: [
 		BrowserModule,

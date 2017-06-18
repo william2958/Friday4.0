@@ -7,5 +7,4 @@ export function userKeySelector(state: ApplicationState): string {
 		return '';
 	}
 
-
 }

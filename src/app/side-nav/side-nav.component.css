@@ -3,8 +3,16 @@
 	height: 100%
 }
 
+#logo:hover {
+	background-color: transparent;
+}
+
 #logo-image {
 	height: 90px;
+}
+
+#logo-image {
+	cursor: pointer;
 }
 
 #logo-container {

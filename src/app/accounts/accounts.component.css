@@ -1,7 +1,28 @@
 .accounts-nav {
-	margin-bottom: 20px;
+}
+
+.accounts-list {
+	margin-top: 80px;
 }
 
 .collapsible-header {
 	font-size: 1.3em;
+}
+
+.modal {
+	height: 400px;
+}
+
+.modal-content {
+	border-radius: 0px;
+	border-bottom: transparent;
+	box-shadow: none;
+}
+
+@media (min-width: 992px) {
+	.accounts-nav {
+		width: -webkit-calc(100% - 300px);
+		width:    -moz-calc(100% - 300px);
+		width:         calc(100% - 300px);
+	}
 }

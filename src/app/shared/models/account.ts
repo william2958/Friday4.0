@@ -1,7 +1,8 @@
 export interface Account {
-	$key: string;
+	key: string;
 	login: string;
 	website: string;
 	password: string;
 	date_created: number;
+	account_notes?: string;
 }

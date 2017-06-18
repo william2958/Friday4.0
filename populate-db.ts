@@ -63,6 +63,7 @@ dbData.users.forEach( user => {
 			login: account.login,
 			website: account.website,
 			password: account.password,
+			account_notes: account.account_notes || '',
 			date_created: currentTime
 		}).key;
 

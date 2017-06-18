@@ -24,9 +24,10 @@ export class NewAccountComponent implements OnInit {
 	    private fb: FormBuilder
 	) {
 		this.createAccountForm = this.fb.group({
-			website: ['facebook.com', Validators.required],
-			login: ['william2958@gmail.com', Validators.required],
-			password: ['password123', Validators.required]
+			website: ['', Validators.required],
+			login: ['', Validators.required],
+			password: ['', Validators.required],
+			account_notes: ['', Validators.required]
 		});
 	}
 
@@ -38,11 +39,15 @@ export class NewAccountComponent implements OnInit {
 	}
 
 	createAccount() {
-		console.log('Creating account with form: ', this.createAccountForm.value);
 		this.store.dispatch(new CreateAccountAction({
 			accountData: this.createAccountForm.value,
 			userKey: this.userKey
 		}));
+		this.back();
+	}
+
+	back() {
+		this.router.navigate(['', 'home', 'accounts']);
 	}
 
 }

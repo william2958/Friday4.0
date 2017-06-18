@@ -9,7 +9,6 @@ export class ToastService {
 	constructor() {}
 
 	showToast(input) {
-		console.log('received toast input: ', input);
 
 		switch (input[0]) {
 

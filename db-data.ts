@@ -10,7 +10,8 @@ export const dbData = {
 				{
 					'login': 'will_huang',
 					'website': 'spotify',
-					'password': 'password123'
+					'password': 'password123',
+					'account_notes': 'quick account note'
 				},
 				{
 					'login': 'william2958@gmail.com',

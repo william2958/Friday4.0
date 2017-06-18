@@ -2,50 +2,49 @@
 	<div class="nav-wrapper container">
 		<a class="brand-logo" (click)="back()">
 			<i class="material-icons">arrow_back</i>
-			New Account
+			Account Details
 		</a>
 	</div>
 </nav>
 
-<div class="container createAccountSection">
-
-	<form (ngSubmit)="createAccount()" autocomplete="off" novalidate [formGroup]="createAccountForm">
+<div class="container accountDetailSection">
+	<form (ngSubmit)="saveAccount()" autocomplete="off" novalidate [formGroup]="editAccountForm">
 		<div class="row">
 			<div class="input-field col s6">
 				<i class="material-icons prefix">language</i>
 				<input formControlName="website" id="website" type="text" class="validate">
-				<label for="website">Website</label>
+				<label for="website" class="active">Website</label>
 			</div>
 			<div class="input-field col s6">
 				<i class="material-icons prefix">email</i>
 				<input formControlName="login" id="login" type="text" class="validate">
-				<label for="login">Login</label>
-			</div>
-		</div>
-		<div class="row">
-			<div class="input-field col s6">
-				<i class="material-icons prefix">language</i>
-				<input formControlName="account_notes" id="account_notes" type="text" class="validate">
-				<label for="account_notes">Notes:</label>
+				<label for="login" class="active">Login</label>
 			</div>
 		</div>
 		<div class="row">
 			<div class="input-field col s12">
 				<i class="material-icons prefix">lock</i>
-				<input formControlName="password" id="password" type="password" class="validate">
-				<label for="password">Password</label>
+				<input formControlName="account_notes" id="account_notes" type="text" class="validate">
+				<label for="account_notes" class="active">Notes:</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col s12">
+				<i class="material-icons prefix">lock</i>
+				<input formControlName="password" id="password" type="text" class="validate">
+				<label for="password" class="active">Password</label>
 			</div>
 		</div>
 
-		<button class="btn waves-effect waves-light" type="submit" name="action">Create Account
+		<button class="btn waves-effect waves-light" type="submit" name="action">Save Account
 			<i class="material-icons right">send</i>
 		</button>
 	</form>
 
-	<form action="#">
-		<p class="range-field">
-			<input type="range" id="test5" min="0" max="100" />
-		</p>
-	</form>
+	<button (click)="deleteAccount()" class="btn red waves-effect waves-light" style="margin-top: 20px">
+		Delete Account
+	</button>
 
 </div>
+
+

@@ -21,6 +21,7 @@ import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/empty';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/observable/throw';
+import 'rxjs/add/operator/reduce';
 
 if (environment.production) {
   enableProdMode();

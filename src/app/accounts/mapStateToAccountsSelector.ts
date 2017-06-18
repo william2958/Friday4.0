@@ -5,3 +5,9 @@ export function mapStateToAccountsSelector(state: ApplicationState): Account[] {
 	return state.accountData.accounts;
 
 }
+
+export function mapStateToCurrentAccountKeySelector(state: ApplicationState): string {
+
+	return state.accountData.currentAccountId;
+
+}

@@ -5,7 +5,7 @@ import {Subject} from "rxjs/Subject";
 import {AngularFireDatabase} from "angularfire2/database";
 import {Store} from "@ngrx/store";
 import {ApplicationState} from "../store/application-state";
-import {UpdateUserAction, UserSignedInAction} from "../store/actions/authActions";
+import {GetFirebaseUserAction, UpdateUserAction, UserSignedInAction} from "../store/actions/authActions";
 import {Router} from "@angular/router";
 import {User} from "../shared/models/user";
 
@@ -44,6 +44,7 @@ export class AuthService {
 			            email_confirmed: false,
 						date_created: (new Date).getTime()
 					});
+					this.store.dispatch(new GetFirebaseUserAction(res.uid));
 				}
 			);
 	}

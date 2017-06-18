@@ -56,9 +56,6 @@ function handleSignedOutAction(state: UiState, action: UserSignedInAction): UiSt
 	const newUiState: UiState = _.cloneDeep(state);
 
 	newUiState.user = undefined;
-	newUiState.currentAccountId = undefined;
-	newUiState.currentNoteId = undefined;
-	newUiState.currentQuicknoteId = undefined;
 
 	return newUiState;
 

@@ -7,6 +7,7 @@ import {NotesComponent} from "./notes/notes.component";
 import {AccountsComponent} from "./accounts/accounts.component";
 import {NewAccountComponent} from "./new-account/new-account.component";
 import {LoggedOutGuard} from "./shared/guards/logged-out.guard";
+import {AccountDetailComponent} from "./account-detail/account-detail.component";
 export const routes: Routes = [
 
 	{
@@ -21,12 +22,21 @@ export const routes: Routes = [
 		canActivate: [AuthGuard],
 		children: [
 			{
-				path: 'newAccount',
-				component: NewAccountComponent
-			},
-			{
 				path: 'accounts',
-				component: AccountsComponent
+				children: [
+					{
+						path: 'new',
+						component: NewAccountComponent
+					},
+					{
+						path: ':accountId/:userId',
+						component: AccountDetailComponent
+					},
+					{
+						path: '',
+						component: AccountsComponent,
+					}
+				]
 			},
 			{
 				path: 'notes',
