@@ -50,7 +50,6 @@ function handleAccountKeysLoadedAction(state: AccountData, action: AccountKeysLo
 
 function handleSingleAccountLoadedAction(state: AccountData, action: SingleAccountLoadedAction): AccountData {
 	const newAccountData = _.cloneDeep(state);
-	console.log('single account loaded and saving: ', action.payload);
 	newAccountData.currentAccount = action.payload;
 	return newAccountData;
 }

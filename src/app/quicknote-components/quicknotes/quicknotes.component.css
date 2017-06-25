@@ -1,0 +1,57 @@
+.notes-list {
+	margin-top: 80px;
+}
+
+.collapsible-header {
+	font-size: 1.3em;
+}
+
+.notes-container {
+	position: relative;
+}
+
+.searchResults {
+	top: 64px;
+	left: 2.5%;
+	position: absolute;
+	width: 95%;
+	z-index: 800;
+	background-color: white;
+	font-size: 1.3em;
+}
+
+/* Individual result */
+.searchResult {
+	padding-left: 20px;
+}
+
+.search-result-icon {
+	width: 16px;
+	height: 16px;
+}
+
+
+
+.hovering {
+	background-color: grey;
+}
+
+@media (min-width: 992px) {
+	.quicknotes-nav {
+		width: -webkit-calc(100% - 300px);
+		width:    -moz-calc(100% - 300px);
+		width:         calc(100% - 300px);
+	}
+}
+
+@media (max-width: 992px) {
+	.quicknotes-nav {
+		width: 100%;
+	}
+	.search-input-icon {
+		padding-left: 40px;
+	}
+	.input-field input[type=search] {
+		padding-left: 85px;
+	}
+}

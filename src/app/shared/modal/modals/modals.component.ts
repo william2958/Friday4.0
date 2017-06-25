@@ -1,7 +1,7 @@
-import {Component, ElementRef, EventEmitter, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import {Observable} from "rxjs/Observable";
 import {
-	loginErrorsSelector, showGuardedLoginSelector, showLoginSelector, showSignupSelector,
+	loginErrorsSelector, showLoginSelector, showPinSelector, showSignupSelector,
 	signupErrorsSelector
 } from "./show-selectors";
 import {ApplicationState} from "../../../store/application-state";
@@ -11,12 +11,12 @@ import {userSelector} from "../../../nav/user-selector";
 import {Router} from "@angular/router";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {
-	ClearErrorAction, LOGIN_ERROR, ShowToastAction, SIGNUP_ERROR,
+	ClearErrorAction, LOGIN_ERROR, SetPinAction, ShowToastAction, SIGNUP_ERROR,
 	SUCCESS_TOAST
 } from "../../../store/actions/globalActions";
 import {User} from "../../models/user";
 import {MaterializeAction} from "angular2-materialize";
-declare const jQuery: any;
+import {pinSetSelector} from "../../../store/selectors/pinSelector";
 
 @Component({
 	selector: 'modals',
@@ -27,6 +27,7 @@ export class ModalsComponent implements OnInit {
 
 	showLoginModal$: Observable<boolean>;
 	showSignupModal$: Observable<boolean>;
+	showPinModal$: Observable<boolean>;
 
 	loginErrors$: Observable<string[]>;
 	signupErrors$: Observable<string[]>;
@@ -38,6 +39,7 @@ export class ModalsComponent implements OnInit {
 
 	loginModalActions = new EventEmitter<string|MaterializeAction>();
 	signupModalActions = new EventEmitter<string|MaterializeAction>();
+	pinModalActions = new EventEmitter<string|MaterializeAction>();
 
 	constructor(
 		private store: Store<ApplicationState>,
@@ -46,6 +48,7 @@ export class ModalsComponent implements OnInit {
 	) {
 		this.showLoginModal$ = this.store.select(showLoginSelector).skip(1);
 		this.showSignupModal$ = this.store.select(showSignupSelector).skip(1);
+		this.showPinModal$ = this.store.select(showPinSelector).skip(1);
 
 		this.loginForm = this.fb.group({
 			email: ['william2958@gmail.com', Validators.required],
@@ -75,6 +78,18 @@ export class ModalsComponent implements OnInit {
 			}
 		);
 
+		this.showPinModal$.subscribe(
+			() => {
+				this.pinModalActions.emit({action: 'modal', params: ['open']});
+			}
+		);
+
+		this.store.select(pinSetSelector).subscribe(val => {
+			if (val) {
+				this.pinModalActions.emit({action: 'modal', params: ['close']});
+			}
+		});
+
 		this.loginErrors$ = this.store.select(loginErrorsSelector);
 		this.signupErrors$ = this.store.select(signupErrorsSelector);
 
@@ -95,7 +110,7 @@ export class ModalsComponent implements OnInit {
 					this.loginModalActions.emit({action: 'modal', params: ['close']});
 					this.loginForm.reset();
 					this.store.dispatch(new ShowToastAction([SUCCESS_TOAST, 'Login Successful!']));
-					this.router.navigate(['home', 'accounts']);
+					this.router.navigate(['home', 'notes']);
 				}
 			}
 		);
@@ -122,9 +137,21 @@ export class ModalsComponent implements OnInit {
 		);
 	}
 
+	setPin(pin: string) {
+		console.log('setting pin: ', pin);
+		this.store.dispatch(new SetPinAction(pin));
+		this.pinModalActions.emit({action: 'modal', params: ['close']});
+	}
+
+	cancelPin() {
+		this.pinModalActions.emit({action: 'modal', params: ['close']});
+		this.router.navigate(['/', 'home', 'notes']);
+	}
+
 	close() {
 		this.loginModalActions.emit({action: 'modal', params: ['close']});
 		this.signupModalActions.emit({action: 'modal', params: ['close']});
+		this.pinModalActions.emit({action: 'modal', params: ['close']});
 	}
 
 }

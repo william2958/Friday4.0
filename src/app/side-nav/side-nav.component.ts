@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {SignOutAction} from "../store/actions/authActions";
 import {ApplicationState} from "../store/application-state";
 import {Store} from "@ngrx/store";
+import {ShowPinModalAction} from "../store/actions/accountActions";
 
 @Component({
 	selector: 'side-nav',
@@ -19,6 +20,10 @@ export class SideNavComponent implements OnInit {
 
 	logout() {
 		this.store.dispatch(new SignOutAction());
+	}
+
+	enterPin() {
+		this.store.dispatch(new ShowPinModalAction());
 	}
 
 }

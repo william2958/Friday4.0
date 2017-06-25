@@ -7,12 +7,6 @@ export function showLoginSelector(state: ApplicationState): boolean {
 
 }
 
-export function showGuardedLoginSelector(state: ApplicationState): boolean {
-
-	return state.uiState.showGuardedLoginModal;
-
-}
-
 export function showSignupSelector(state: ApplicationState): boolean {
 
 	return state.uiState.showSignupModal;
@@ -28,5 +22,11 @@ export function loginErrorsSelector(state: ApplicationState): string[] {
 export function signupErrorsSelector(state: ApplicationState): string[] {
 
 	return state.uiState.errors[SIGNUP_ERROR];
+
+}
+
+export function showPinSelector(state: ApplicationState): boolean {
+
+	return state.uiState.showPinModal;
 
 }

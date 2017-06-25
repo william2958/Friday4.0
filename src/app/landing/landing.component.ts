@@ -24,7 +24,7 @@ export class LandingComponent implements OnInit {
 
 		this.quicknoteForm = this.fb.group({
 			email: ['william2958@gmail.com', Validators.required],
-			note: ['note', Validators.required]
+			body: ['body', Validators.required]
 		});
 
 		this.errors$ = store.select(quicknoteErrorSelector);
@@ -38,7 +38,7 @@ export class LandingComponent implements OnInit {
 	createQuicknote() {
 		this.store.dispatch(new CreateQuicknoteAction({
 			email: this.quicknoteForm.value.email,
-			note: this.quicknoteForm.value.note
+			body: this.quicknoteForm.value.body
 		}));
 	}
 

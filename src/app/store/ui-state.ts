@@ -5,9 +5,11 @@ export interface UiState {
 	currentNoteId: string;
 	currentQuicknoteId: string;
 	showLoginModal: boolean;
-	showGuardedLoginModal: boolean;
 	showSignupModal: boolean;
+	showPinModal: boolean;
 	errors: {[type: string]: string[]};
+	pin: string;
+	pin_set: boolean;
 
 }
 
@@ -17,8 +19,10 @@ export const INITIAL_UI_STATE: UiState = {
 	currentNoteId: undefined,
 	currentQuicknoteId: undefined,
 	showLoginModal: false,
-	showGuardedLoginModal: false,
 	showSignupModal: false,
-	errors: {}
+	showPinModal: false,
+	errors: {},
+	pin: undefined,
+	pin_set: false
 
 };

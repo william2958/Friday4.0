@@ -3,11 +3,14 @@ import {LandingComponent} from "./landing/landing.component";
 import {Error404Component} from "./error404component/error404component.component";
 import {HomeComponent} from "./home/home.component";
 import {AuthGuard} from "./shared/guards/auth.guard";
-import {NotesComponent} from "./notes/notes.component";
-import {AccountsComponent} from "./accounts/accounts.component";
-import {NewAccountComponent} from "./new-account/new-account.component";
+import {NotesComponent} from "./note-components/notes/notes.component";
+import {AccountsComponent} from "./account-components/accounts/accounts.component";
+import {NewAccountComponent} from "./account-components/new-account/new-account.component";
 import {LoggedOutGuard} from "./shared/guards/logged-out.guard";
-import {AccountDetailComponent} from "./account-detail/account-detail.component";
+import {AccountDetailComponent} from "./account-components/account-detail/account-detail.component";
+import {NewNoteComponent} from "./note-components/notes-new/notes-new.component";
+import {NoteDetailComponent} from "./note-components/note-detail/note-detail.component";
+import {QuicknotesComponent} from "./quicknote-components/quicknotes/quicknotes.component";
 export const routes: Routes = [
 
 	{
@@ -40,7 +43,24 @@ export const routes: Routes = [
 			},
 			{
 				path: 'notes',
-				component: NotesComponent
+				children: [
+					{
+						path: 'new',
+						component: NewNoteComponent
+					},
+					{
+						path: ':noteId/:userId',
+						component: NoteDetailComponent
+					},
+					{
+						path: '',
+						component: NotesComponent
+					}
+				]
+			},
+			{
+				path: 'quicknotes',
+				component: QuicknotesComponent
 			}
 		]
 	},

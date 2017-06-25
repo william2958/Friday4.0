@@ -5,14 +5,11 @@ import {FirebaseListFactoryOpts} from "angularfire2/interfaces";
 import {Account} from "../shared/models/account";
 import {CreateAccountModel} from "../shared/models/createAccount";
 import {Subject} from "rxjs/Subject";
-import {Router} from "@angular/router";
-import {Store} from "@ngrx/store";
-import {ApplicationState} from "../store/application-state";
-import {mapStateToAccountKeysSelector} from "../accounts/accountSelectors";
 
 export const ACCOUNTS_PAGE_SIZE = 10;
 export const ORDER_BY_KEY = 'ORDER_BY_KEY';
-export const ORDER_BY_DATE = 'ORDER_BY_DATE';
+export const ORDER_BY_NEWEST = 'ORDER_BY_NEWEST';
+export const ORDER_BY_OLDEST = 'ORDER_BY_OLDEST';
 export const ORDER_BY_WEBSITE_NAME = 'ORDER_BY_WEBSITE_NAME';
 
 @Injectable()
@@ -22,9 +19,28 @@ export class AccountService {
 		private db: AngularFireDatabase,
 	) { }
 
-	getInitialAccounts(userKey: string) {
+	getInitialAccounts(userKey: string, orderBy: string = ORDER_BY_NEWEST) {
 		// Load the first page of accounts
-		return this.loadFirstPageAccounts(userKey, ACCOUNTS_PAGE_SIZE);
+
+		let firstPageAccountKeys$ = undefined;
+
+		// Get the account keys observable
+		if (orderBy === ORDER_BY_NEWEST) {
+			firstPageAccountKeys$ = this.findAccountKeys(userKey, {
+				query: {
+					limitToLast: ACCOUNTS_PAGE_SIZE
+				}
+			});
+		} else if (orderBy === ORDER_BY_OLDEST) {
+			firstPageAccountKeys$ = this.findAccountKeys(userKey, {
+				query: {
+					limitToFirst: ACCOUNTS_PAGE_SIZE
+				}
+			});
+		}
+
+		// Once we have the account keys we go find the accounts associated to them.
+		return this.findAccountsForAccountKeys(firstPageAccountKeys$);
 	}
 
 	// Accepts the user key and the currently shown last account key
@@ -61,7 +77,11 @@ export class AccountService {
 	}
 
 	loadSingleAccount(accountKey: string) {
-		return this.db.object('accounts/' + accountKey);
+		return this.db.object('accounts/' + accountKey)
+			.map(account => {
+				account.key = account.$key;
+				return account;
+			});
 	}
 
 	getAccountKeys(userKey: string) {
@@ -138,21 +158,6 @@ export class AccountService {
 
 
 
-	// Function to load the first page of accounts
-	loadFirstPageAccounts(userKey: string, pageSize: number, orderBy?: string): Observable<Account[]> {
-
-		// Get the account keys observable
-		const firstPageAccountKeys$ = this.findAccountKeys(userKey, {
-			query: {
-				limitToFirst: pageSize
-			}
-		});
-
-		// Once we have the account keys we go find the accounts associated to them.
-		return this.findAccountsForAccountKeys(firstPageAccountKeys$);
-
-	}
-
 	// Get the account keys from the accountsPerUser node. Goes off of
 	// the userKey and a query object that can be used for pagination
 	findAccountKeys(userKey: string, query: FirebaseListFactoryOpts = {}): Observable<string[]> {
@@ -202,6 +207,8 @@ export class AccountService {
 	}
 
 	firebaseUpdateAccount(dataToSave) {
+
+		console.log('firebase update account with: ', dataToSave);
 
 		const subject = new Subject();
 

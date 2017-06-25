@@ -12,10 +12,12 @@
 			<img id="logo-image" src="assets/images/friday-square.svg">
 		</a>
 	</li>
-	<li><a class="waves-effect" [routerLink]="['/', 'home', 'accounts']"><i class="material-icons">lock</i>Accounts</a></li>
 	<li><a class="waves-effect" [routerLink]="['/', 'home', 'notes']"><i class="material-icons">note</i>Notes</a></li>
+	<li><a class="waves-effect" [routerLink]="['/', 'home', 'quicknotes']"><i class="material-icons">note</i>Quicknotes</a></li>
+	<li><a class="waves-effect" [routerLink]="['/', 'home', 'accounts']"><i class="material-icons">lock</i>Accounts</a></li>
 	<li><div class="divider"></div></li>
 	<li><a class="waves-effect" class="subheader">Preferences</a></li>
+	<li><a class="waves-effect" (click)="enterPin()">Re-Enter Pin</a></li>
 	<li><a>Account</a></li>
 	<li><a class="waves-effect" (click)="logout()">Log Out</a></li>
 </ul>

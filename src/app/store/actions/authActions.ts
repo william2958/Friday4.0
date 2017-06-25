@@ -9,7 +9,6 @@ export const SIGNUP_ACTION = 'SIGNUP_ACTION';
 export const SIGN_OUT_ACTION = 'SIGN_OUT_ACTION';
 export const SIGNED_OUT_ACTION = 'SIGNED_OUT_ACTION';
 export const SHOW_LOGIN_MODAL_ACTION = 'SHOW_LOGIN_MODAL_ACTION';
-export const SHOW_GUARDED_MODAL_ACTION = 'SHOW_GUARDED_MODAL_ACTION';
 export const SHOW_SIGNUP_MODAL_ACTION = 'SHOW_SIGNUP_MODAL_ACTION';
 
 export class UpdateUserAction implements Action {
@@ -58,10 +57,6 @@ export class SignedOutAction implements Action {
 
 export class ShowLoginModalAction implements Action {
 	type = SHOW_LOGIN_MODAL_ACTION;
-}
-
-export class ShowGuardedModalAction implements Action {
-	type = SHOW_GUARDED_MODAL_ACTION;
 }
 
 export class ShowSignupModalAction implements Action {

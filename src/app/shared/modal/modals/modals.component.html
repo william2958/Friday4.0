@@ -60,3 +60,26 @@
 		<button type="submit" class="btn btn-primary">Sign Up</button>
 	</form>
 </div>
+
+
+<!-- Pin Modal -->
+<div #pinModal materialize="modal" [materializeParams]="[{dismissible: false, inDuration: 200}]"
+	 [materializeActions]="pinModalActions" class="modal">
+	<h4 class="modal-title title">Enter Pin</h4>
+	<img (click)="close()" class="cancelIcon svgIcon" src="assets/images/cancel.svg"/>
+
+
+	<form autocomplete="off" (submit)="setPin(pinInput.value)">
+		<div>
+
+		</div>
+		<div class="input-field col s6">
+			<input #pinInput id="pin" type="text" class="validate">
+			<label for="pin">Pin</label>
+		</div>
+	</form>
+
+	<button (click)="cancelPin()">Cancel</button>
+
+</div>
+

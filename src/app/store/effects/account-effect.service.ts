@@ -5,14 +5,13 @@ import {Observable} from "rxjs/Observable";
 import {Store} from "@ngrx/store";
 import {
 	AccountKeysLoadedAction,
-	AccountsLoadedAction, CREATE_ACCOUNT_ACTION, DELETE_ACCOUNT_ACTION, GET_ACCOUNT_KEYS_ACTION,
-	LOAD_ACCOUNTS_ACTION, LOAD_NEXT_ACCOUNTS_ACTION, LOAD_PREV_ACCOUNTS_ACTION, LOAD_SINGLE_ACCOUNT_ACTION,
+	AccountsLoadedAction, CREATE_ACCOUNT_ACTION, DELETE_ACCOUNT_ACTION, GET_ACCOUNT_KEYS_ACTION, LOAD_INITIAL_ACCOUNTS_ACTION, LOAD_NEXT_ACCOUNTS_ACTION, LOAD_PREV_ACCOUNTS_ACTION,
+	LOAD_SINGLE_ACCOUNT_ACTION,
 	SingleAccountLoadedAction,
 	UPDATE_ACCOUNT_ACTION
 } from "../actions/accountActions";
 import {ACCOUNT_ERROR, ErrorOccurredAction, ShowToastAction, SUCCESS_TOAST} from "../actions/globalActions";
 import {ApplicationState} from "../application-state";
-import {Router} from "@angular/router";
 
 @Injectable()
 export class AccountEffectService {
@@ -20,8 +19,7 @@ export class AccountEffectService {
 	constructor(
 		private actions$: Actions,
 	    private accountService: AccountService,
-	    private store: Store<ApplicationState>,
-	    private router: Router
+	    private store: Store<ApplicationState>
 	) { }
 
 	// This effect will actually get triggered by firebase updates
@@ -31,10 +29,10 @@ export class AccountEffectService {
 	// will be updated.
 
 	@Effect() getInitialAccounts$ = this.actions$
-		.ofType(LOAD_ACCOUNTS_ACTION)
+		.ofType(LOAD_INITIAL_ACCOUNTS_ACTION)
 		.switchMap(action => Observable
 			.from(
-				this.accountService.getInitialAccounts(action.payload)
+				this.accountService.getInitialAccounts(action.payload.userKey, action.payload.sortBy)
 			).catch(
 				(err) => {
 					console.log('account error: ', err);

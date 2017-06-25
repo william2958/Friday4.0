@@ -4,6 +4,7 @@ export const SIGNUP_ERROR = 'SIGNUP_ERROR';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const QUICKNOTE_ERROR = 'QUICKNOTE_ERROR';
 export const ACCOUNT_ERROR = 'ACCOUNT_ERROR';
+export const NOTE_ERROR = 'NOTE_ERROR';
 
 export const SUCCESS_TOAST = 'SUCCESS_TOAST';
 export const WARNING_TOAST = 'WARNING_TOAST';
@@ -12,6 +13,8 @@ export const ERROR_TOAST = 'ERROR_TOAST';
 export const ERROR_OCCURRED_ACTION = 'ERROR_OCCURRED_ACTION';
 export const CLEAR_ERROR_ACTION = 'CLEAR_ERROR_ACTION';
 export const SHOW_TOAST_ACTION = 'SHOW_TOAST_ACTION';
+
+export const SET_PIN_ACTION = 'SET_PIN_ACTION';
 
 export interface ErrorPayload {
 	type: string;
@@ -39,4 +42,9 @@ export class ShowToastAction implements Action {
 
 	constructor(public payload?: string[]) { }
 
+}
+
+export class SetPinAction implements Action {
+	type = SET_PIN_ACTION;
+	constructor(public payload?: string) {}
 }

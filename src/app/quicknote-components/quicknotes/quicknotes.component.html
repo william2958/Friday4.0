@@ -1,0 +1,36 @@
+<div class="quicknotes-container">
+
+	<div class="navbar-fixed">
+		<nav class="quicknotes-nav">
+			<div class="nav-wrapper container">
+				<a href="#!" class="brand-logo"><i class="material-icons">cloud</i>Quicknotes</a>
+				<ul class="right hide-on-med-and-down">
+					<li><a (click)="deleteAll()" data-toggle="tooltip" data-placement="left" title="Delete All">
+						<i class="material-icons">delete_sweep</i></a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+
+	<div class="notes-list">
+
+		<div *ngIf="quicknotes$ | async as quicknotes" class="container">
+			<div *ngFor="let note of quicknotes">
+				<quicknote [quicknote]="note" (deleteQuicknote)="deleteQuicknote($event)"></quicknote>
+			</div>
+		</div>
+
+	</div>
+
+	<form (ngSubmit)="createQuicknote()" autocomplete="off" novalidate [formGroup]="quicknoteForm">
+		<fieldset>
+			<div class="form-field">
+				<label>Note:</label>
+				<input type="text" name="note" formControlName="body">
+			</div>
+		</fieldset>
+		<button type="submit" class="btn btn-primary">Create Quicknote</button>
+	</form>
+
+</div>

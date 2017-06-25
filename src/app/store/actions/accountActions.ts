@@ -2,7 +2,7 @@ import {Action} from "@ngrx/store";
 import {CreateAccountModel} from "../../shared/models/createAccount";
 import {Account} from "../../shared/models/account";
 
-export const LOAD_ACCOUNTS_ACTION = 'LOAD_ACCOUNTS_ACTION';
+export const LOAD_INITIAL_ACCOUNTS_ACTION = 'LOAD_INITIAL_ACCOUNTS_ACTION';
 export const LOAD_SINGLE_ACCOUNT_ACTION = 'LOAD_SINGLE_ACCOUNT_ACTION';
 export const ACCOUNTS_LOADED_ACTION = 'ACCOUNTS_LOADED_ACTION';
 export const SINGLE_ACCOUNT_LOADED_ACTION = 'SINGLE_ACCOUNT_LOADED_ACTION';
@@ -13,12 +13,13 @@ export const UPDATE_ACCOUNT_ACTION = 'UPDATE_ACCOUNT_ACTION';
 export const DELETE_ACCOUNT_ACTION = 'DELETE_ACCOUNT_ACTION';
 export const LOAD_NEXT_ACCOUNTS_ACTION = 'LOAD_NEXT_ACCOUNTS_ACTION';
 export const LOAD_PREV_ACCOUNTS_ACTION = 'LOAD_PREV_ACCOUNTS_ACTION';
+export const SHOW_PIN_MODAL_ACTION = 'SHOW_PIN_MODAL_ACTION';
 
 // Tells getAccounts$ effect to go and retrieve the accounts
 // Accepts the user key as payload
-export class LoadAccountsAction implements Action {
-	type = LOAD_ACCOUNTS_ACTION;
-	constructor(public payload?: string) { }
+export class LoadInitialAccountsAction implements Action {
+	type = LOAD_INITIAL_ACCOUNTS_ACTION;
+	constructor(public payload?: {userKey: string, sortBy: string}) { }
 }
 
 export interface LoadSingleAccountPayload {
@@ -97,4 +98,8 @@ export class LoadNextAccountsAction implements Action {
 export class LoadPrevAccountsAction implements Action {
 	type = LOAD_PREV_ACCOUNTS_ACTION;
 	constructor(public payload?: PaginateAccountsPayload) { }
+}
+
+export class ShowPinModalAction implements Action {
+	type = SHOW_PIN_MODAL_ACTION;
 }

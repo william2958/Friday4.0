@@ -7,8 +7,12 @@ import {Component, EventEmitter, OnInit} from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
+	/*
+	Login Modal component will redirect to /notes
+	So will the logged-out guard
+	 */
+
 	sidenavActions = new EventEmitter<any>();
-	// sidenavParams = [];
 
 	constructor() { }
 
@@ -18,8 +22,6 @@ export class HomeComponent implements OnInit {
 	shownav() {
 		this.sidenavActions.emit({action: "sideNav", params: ['show']});
 		console.log('showing nav');
-		// this.sidenavParams = ['show'];
-		// this.sidenavActions.emit('sideNav');
 	}
 
 }

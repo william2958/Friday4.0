@@ -1,5 +1,5 @@
 export interface Note {
-	$key: string;
+	key: string;
 	title: string;
 	body: string;
 	date_created: number;

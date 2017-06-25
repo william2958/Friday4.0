@@ -31,16 +31,24 @@ import {ToastService} from "./services/toast.service";
 import {GlobalEffectService} from "./store/effects/global-effect.service";
 import {QuicknoteService} from "./services/quicknote.service";
 import {QuicknoteEffectService} from "./store/effects/quicknote-effect.service";
-import { AccountsComponent } from './accounts/accounts.component';
-import { NotesComponent } from './notes/notes.component';
+import { AccountsComponent } from './account-components/accounts/accounts.component';
+import { NotesComponent } from './note-components/notes/notes.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
 import {MaterializeModule} from "angular2-materialize";
 import {AccountEffectService} from "./store/effects/account-effect.service";
 import {AccountService} from "./services/account.service";
-import { AccountComponent } from './account/account.component';
-import { NewAccountComponent } from './new-account/new-account.component';
+import { AccountComponent } from './account-components/account/account.component';
+import { NewAccountComponent } from './account-components/new-account/new-account.component';
 import {LoggedOutGuard} from "./shared/guards/logged-out.guard";
-import { AccountDetailComponent } from './account-detail/account-detail.component';
+import { AccountDetailComponent } from './account-components/account-detail/account-detail.component';
+import {EncryptService} from "./services/encrypt.service";
+import {NoteService} from "./services/note.service";
+import { NoteComponent } from './note-components/note/note.component';
+import {NoteEffectService} from "./store/effects/note-effect.service";
+import { NewNoteComponent } from './note-components/notes-new/notes-new.component';
+import { NoteDetailComponent } from './note-components/note-detail/note-detail.component';
+import { QuicknotesComponent } from './quicknote-components/quicknotes/quicknotes.component';
+import { QuicknoteComponent } from './quicknote-components/quicknote/quicknote.component';
 
 export function storeReducer(state: ApplicationState, action: Action): ApplicationState {
 	return {
@@ -65,7 +73,12 @@ export function storeReducer(state: ApplicationState, action: Action): Applicati
 		SideNavComponent,
 		AccountComponent,
 		NewAccountComponent,
-		AccountDetailComponent
+		AccountDetailComponent,
+		NoteComponent,
+		NewNoteComponent,
+		NoteDetailComponent,
+		QuicknotesComponent,
+		QuicknoteComponent
 	],
 	imports: [
 		BrowserModule,
@@ -86,7 +99,8 @@ export function storeReducer(state: ApplicationState, action: Action): Applicati
 		EffectsModule.run(AuthEffectService),
 		EffectsModule.run(GlobalEffectService),
 		EffectsModule.run(QuicknoteEffectService),
-		EffectsModule.run(AccountEffectService)
+		EffectsModule.run(AccountEffectService),
+		EffectsModule.run(NoteEffectService)
 	],
 	providers: [
 		AuthService,
@@ -96,7 +110,10 @@ export function storeReducer(state: ApplicationState, action: Action): Applicati
 		ToastService,
 		QuicknoteService,
 		AccountEffectService,
-		AccountService
+		AccountService,
+		EncryptService,
+		NoteService,
+		NoteEffectService
 	],
 	bootstrap: [FridayComponent]
 })

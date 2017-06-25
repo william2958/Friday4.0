@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Account} from "../shared/models/account";
+import {Account} from "../../shared/models/account";
 import {Router} from "@angular/router";
 
 @Component({
