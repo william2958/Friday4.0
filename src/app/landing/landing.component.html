@@ -1,28 +1,30 @@
 <nav-bar></nav-bar>
 
-<div class="container">
+<div class="landing_page">
 
-	<h1>LANDING</h1>
-	<button routerLink="home">home</button>
+	<h2 class="quicknote-header">Add a Quick Note</h2>
 
-	<form (ngSubmit)="createQuicknote()" autocomplete="off" novalidate [formGroup]="quicknoteForm">
-		<fieldset>
-			<div class="form-field">
-				<label>Email:</label>
-				<input type="text" name="email" formControlName="email">
+	<form (ngSubmit)="createQuicknote()" autocomplete="off"
+		  novalidate [formGroup]="quicknoteForm" class="quicknote-form">
+		<div class="error-row">
+			<div *ngIf="errors$ | async as errors">
+				<div *ngFor="let error of errors">
+					Error: {{error}}
+				</div>
 			</div>
-			<div class="form-field">
-				<label>Note:</label>
-				<input type="text" name="note" formControlName="body">
-			</div>
-		</fieldset>
-		<button type="submit" class="btn btn-primary">Create Quicknote</button>
-	</form>
-
-	<div *ngIf="errors$ | async as errors">
-		<div *ngFor="let error of errors">
-			Error: {{error}}
 		</div>
-	</div>
+		<div class="input-field">
+			<input type="email" id="email" name="email" formControlName="email" class="landing-title-input">
+			<label for="email" class="landing-label">Email:</label>
+		</div>
+		<div class="input-field">
+			<textarea id="textarea1" formControlName="body" type="text"
+					  class="materialize-textarea landing-body-textarea" data-length="160"></textarea>
+			<label for="textarea1" class="landing-label">Note:</label>
+		</div>
+		<div class="button-row">
+			<button type="submit" class="btn btn-primary create-button">Create Quicknote</button>
+		</div>
+	</form>
 
 </div>

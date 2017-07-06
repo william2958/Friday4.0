@@ -23,21 +23,19 @@ export class QuicknoteEffectService {
 
 	@Effect() getQuicknotes$ = this.actions$
 		.ofType(LOAD_QUICKNOTES_ACTION)
-		.switchMap(action => Observable
-			.from(
-				this.quicknoteService.getQuicknotes(action.payload)
-			).catch(
-				(err) => {
-					console.log('getting quicknotes error: ', err);
+		.switchMap(action => this.quicknoteService.getQuicknotes(action.payload))
+		.map(quicknotes => new QuicknotesLoadedAction(quicknotes))
+		.catch(
+			(err) => {
+				if (err.code !== 'PERMISSION_DENIED') {
 					this.store.dispatch(new ErrorOccurredAction({
 						type: QUICKNOTE_ERROR,
 						message: err.message
 					}));
-					return Observable.empty();
 				}
-			)
-		)
-		.map(quicknotes => new QuicknotesLoadedAction(quicknotes));
+				return Observable.empty();
+			}
+		);
 
 	@Effect() createQuicknote$: Observable<Action> = this.actions$
 		.ofType(CREATE_QUICKNOTE_ACTION)
@@ -46,7 +44,6 @@ export class QuicknoteEffectService {
 				this.quicknoteService.createQuicknote(action.payload.email, action.payload.body)
 			).catch(
 				(err) => {
-					console.log('error when creating quicknote');
 					this.store.dispatch(new ErrorOccurredAction({
 						type: QUICKNOTE_ERROR,
 						message: err.message
@@ -55,7 +52,8 @@ export class QuicknoteEffectService {
 				}
 			)
 		)
-		.map(result => new ShowToastAction([SUCCESS_TOAST, 'Quick note successfully created!']));
+		.map(result => new ShowToastAction([SUCCESS_TOAST, 'Quicknote Created!']));
+
 
 	@Effect() deleteQuicknote$: Observable<Action> = this.actions$
 		.ofType(DELETE_QUICKNOTE_ACTION)
@@ -64,7 +62,6 @@ export class QuicknoteEffectService {
 				this.quicknoteService.deleteQuicknote(action.payload.userKey, action.payload.quicknoteKey)
 			).catch(
 				(err) => {
-					console.log('error when creating quicknote');
 					this.store.dispatch(new ErrorOccurredAction({
 						type: QUICKNOTE_ERROR,
 						message: err.message
@@ -82,7 +79,6 @@ export class QuicknoteEffectService {
 				this.quicknoteService.deleteAllQuicknotes(action.payload)
 			).catch(
 				(err) => {
-					console.log('error when creating quicknote');
 					this.store.dispatch(new ErrorOccurredAction({
 						type: QUICKNOTE_ERROR,
 						message: err.message

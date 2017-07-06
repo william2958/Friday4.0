@@ -35,11 +35,12 @@ export class NoteEffectService {
 				this.noteService.getInitialNotes(action.payload.userKey, action.payload.sortBy)
 			).catch(
 				(err) => {
-					console.log('note error: ', err);
-					this.store.dispatch(new ErrorOccurredAction({
-						type: NOTE_ERROR,
-						message: err.message
-					}));
+					if (err.code !== 'PERMISSION_DENIED') {
+						this.store.dispatch(new ErrorOccurredAction({
+							type: NOTE_ERROR,
+							message: err.message
+						}));
+					}
 					return Observable.empty();
 				}
 			)
@@ -53,7 +54,6 @@ export class NoteEffectService {
 				this.noteService.loadNextPage(action.payload.userKey, action.payload.currentNoteKey)
 			).catch(
 				(err) => {
-					console.log('note error: ', err);
 					this.store.dispatch(new ErrorOccurredAction({
 						type: NOTE_ERROR,
 						message: err.message
@@ -71,7 +71,6 @@ export class NoteEffectService {
 				this.noteService.loadPrevPage(action.payload.userKey, action.payload.currentNoteKey)
 			).catch(
 				(err) => {
-					console.log('note error: ', err);
 					this.store.dispatch(new ErrorOccurredAction({
 						type: NOTE_ERROR,
 						message: err.message
@@ -89,7 +88,6 @@ export class NoteEffectService {
 				this.noteService.loadSingleNote(action.payload.noteKey)
 			).catch(
 				(err) => {
-					console.log('note error: ', err);
 					this.store.dispatch(new ErrorOccurredAction({
 						type: NOTE_ERROR,
 						message: err.message
@@ -112,11 +110,12 @@ export class NoteEffectService {
 				this.noteService.getNoteKeys(action.payload)
 			).catch(
 				(err) => {
-					console.log('note error: ', err);
-					this.store.dispatch(new ErrorOccurredAction({
-						type: NOTE_ERROR,
-						message: err.message
-					}));
+					if (err.code !== 'PERMISSION_DENIED') {
+						this.store.dispatch(new ErrorOccurredAction({
+							type: NOTE_ERROR,
+							message: err.message
+						}));
+					}
 					return Observable.empty();
 				}
 			)
@@ -129,7 +128,6 @@ export class NoteEffectService {
 				this.noteService.createNote(action.payload.noteData, action.payload.userKey)
 			).catch(
 				(err) => {
-					console.log('error while creating note', err);
 					this.store.dispatch(new ErrorOccurredAction({
 						type: NOTE_ERROR,
 						message: err.message
@@ -147,7 +145,6 @@ export class NoteEffectService {
 				this.noteService.updateNote(action.payload.noteData, action.payload.userKey, action.payload.noteKey)
 			).catch(
 				(err) => {
-					console.log('error while updating note', err);
 					this.store.dispatch(new ErrorOccurredAction({
 						type: NOTE_ERROR,
 						message: err.message
@@ -164,7 +161,6 @@ export class NoteEffectService {
 				this.noteService.deleteNote(action.payload.userKey, action.payload.noteKey)
 			).catch(
 				(err) => {
-					console.log('error while deleting note', err);
 					this.store.dispatch(new ErrorOccurredAction({
 						type: NOTE_ERROR,
 						message: err.message

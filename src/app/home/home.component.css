@@ -10,12 +10,14 @@
 }
 
 .show-nav-button {
-	position: absolute;
+	position: fixed;
 	width: 48px;
-	top: 20px;
+	top: 18px;
 	left: 20px;
 	z-index: 9999;
 	color: white;
 }
+
+
 
 

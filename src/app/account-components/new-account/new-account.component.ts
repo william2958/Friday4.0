@@ -3,7 +3,7 @@ import {ApplicationState} from "../../store/application-state";
 import {Store} from "@ngrx/store";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import {CreateAccountAction} from "../../store/actions/accountActions";
+import {CreateAccountAction, ShowPinModalAction} from "../../store/actions/accountActions";
 import {userKeySelector} from "../../store/selectors/user-key-selector";
 import {Observable} from "rxjs/Observable";
 import {EncryptService} from "../../services/encrypt.service";
@@ -45,8 +45,7 @@ export class NewAccountComponent implements OnInit, OnDestroy {
 		);
 		this.pinSetSubscription$ = this.store.select(pinSetSelector).subscribe(pinSet => {
 			if (!pinSet) {
-				console.log('pin not set.');
-				this.router.navigate(['/', 'home', 'accounts', 'pin']);
+				this.store.dispatch(new ShowPinModalAction());
 			}
 		});
 	}

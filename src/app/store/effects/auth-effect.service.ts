@@ -4,13 +4,14 @@ import {AuthService} from "../../services/auth.service";
 import {Action, Store} from "@ngrx/store";
 import {Observable} from "rxjs/Observable";
 import {
-	GET_FIREBASE_USER_ACTION,
+	GET_FIREBASE_USER_ACTION, GetFirebaseGoogleUserAction,
 	GetFirebaseUserAction,
-	SIGN_IN_EMAIL_ACTION, SIGN_OUT_ACTION, SignedOutAction, SIGNUP_ACTION,
-	UserSignedInAction
+	SIGN_IN_EMAIL_ACTION, SIGN_IN_GOOGLE_ACTION, SIGN_OUT_ACTION, SignedOutAction, SIGNUP_ACTION,
+	UserSignedInAction, GET_FIREBASE_GOOGLE_USER_ACTION, USER_SIGNED_IN_ACTION
 } from "../actions/authActions";
 import {ApplicationState} from "../application-state";
 import {ErrorOccurredAction, LOGIN_ERROR, SIGNUP_ERROR} from "../actions/globalActions";
+import {QuicknoteService} from "../../services/quicknote.service";
 
 @Injectable()
 export class AuthEffectService {
@@ -18,6 +19,7 @@ export class AuthEffectService {
 	constructor(
 		private actions$: Actions,
 		private authService: AuthService,
+	    private quicknoteService: QuicknoteService,
 	    private store: Store<ApplicationState>
 	) {}
 
@@ -31,7 +33,37 @@ export class AuthEffectService {
 				this.authService.login(action.payload.email, action.payload.password)
 			).catch(
 				(err) => {
-					console.log('login error: ', err);
+					if (err.code === 'auth/user-not-found') {
+						this.store.dispatch(new ErrorOccurredAction({
+							type: LOGIN_ERROR,
+							message: 'Account not found'
+						}));
+					} else if (err.code === 'auth/wrong-password') {
+						this.store.dispatch(new ErrorOccurredAction({
+							type: LOGIN_ERROR,
+							message: 'Invalid password or user does not exist'
+						}));
+					} else {
+						this.store.dispatch(new ErrorOccurredAction({
+							type: LOGIN_ERROR,
+							message: err.message
+						}));
+					}
+					return Observable.empty();
+				}
+			)
+		).map(response => {
+			// Once logged in, go get the firebase instance of the user
+			return new GetFirebaseUserAction(response.uid);
+		});
+
+	@Effect() signInGoogle$: Observable<Action> = this.actions$
+		.ofType(SIGN_IN_GOOGLE_ACTION)
+		.switchMap(action => Observable
+			.from(
+				this.authService.loginWithGoogle()
+			).catch(
+				(err) => {
 					this.store.dispatch(new ErrorOccurredAction({
 						type: LOGIN_ERROR,
 						message: err.message
@@ -41,7 +73,25 @@ export class AuthEffectService {
 			)
 		).map(response => {
 			// Once logged in, go get the firebase instance of the user
-			return new GetFirebaseUserAction(response.uid);
+			return new GetFirebaseGoogleUserAction(response);
+		});
+
+	@Effect() getGoogleUser$: Observable<Action> = this.actions$
+		.ofType(GET_FIREBASE_GOOGLE_USER_ACTION)
+		.switchMap(action => Observable
+			.from(
+				this.authService.getGoogleUser(action.payload)
+			).catch(
+				(err) => {
+					this.store.dispatch(new ErrorOccurredAction({
+						type: LOGIN_ERROR,
+						message: err.message
+					}));
+					return Observable.empty();
+				}
+			)
+		).map(response => {
+			return new GetFirebaseUserAction(response);
 		});
 
 	// This effect gets the firebase user object from firebase.
@@ -53,7 +103,6 @@ export class AuthEffectService {
 				this.authService.getFirebaseUser(action.payload)
 			).catch(
 				(err) => {
-					console.log('get firebase error error: ', err);
 					this.store.dispatch(new ErrorOccurredAction({
 						type: LOGIN_ERROR,
 						message: err.message
@@ -88,7 +137,6 @@ export class AuthEffectService {
 			)
 			.catch(
 				(err) => {
-					console.log('signup error: ', err);
 					this.store.dispatch(new ErrorOccurredAction({
 						type: SIGNUP_ERROR,
 						message: err.message

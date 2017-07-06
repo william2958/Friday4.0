@@ -35,7 +35,6 @@ export class AccountEffectService {
 				this.accountService.getInitialAccounts(action.payload.userKey, action.payload.sortBy)
 			).catch(
 				(err) => {
-					console.log('account error: ', err);
 					this.store.dispatch(new ErrorOccurredAction({
 						type: ACCOUNT_ERROR,
 						message: err.message
@@ -53,7 +52,6 @@ export class AccountEffectService {
 				this.accountService.loadNextPage(action.payload.userKey, action.payload.currentAccountKey)
 			).catch(
 				(err) => {
-					console.log('account error: ', err);
 					this.store.dispatch(new ErrorOccurredAction({
 						type: ACCOUNT_ERROR,
 						message: err.message
@@ -71,7 +69,6 @@ export class AccountEffectService {
 				this.accountService.loadPrevPage(action.payload.userKey, action.payload.currentAccountKey)
 			).catch(
 				(err) => {
-					console.log('account error: ', err);
 					this.store.dispatch(new ErrorOccurredAction({
 						type: ACCOUNT_ERROR,
 						message: err.message
@@ -89,7 +86,6 @@ export class AccountEffectService {
 				this.accountService.loadSingleAccount(action.payload.accountKey)
 			).catch(
 				(err) => {
-					console.log('account error: ', err);
 					this.store.dispatch(new ErrorOccurredAction({
 						type: ACCOUNT_ERROR,
 						message: err.message
@@ -112,11 +108,12 @@ export class AccountEffectService {
 				this.accountService.getAccountKeys(action.payload)
 			).catch(
 				(err) => {
-					console.log('account error: ', err);
-					this.store.dispatch(new ErrorOccurredAction({
-						type: ACCOUNT_ERROR,
-						message: err.message
-					}));
+					if (err.code !== 'PERMISSION_DENIED') {
+						this.store.dispatch(new ErrorOccurredAction({
+							type: ACCOUNT_ERROR,
+							message: err.message
+						}));
+					}
 					return Observable.empty();
 				}
 			)
@@ -129,7 +126,6 @@ export class AccountEffectService {
 				this.accountService.createAccount(action.payload.accountData, action.payload.userKey)
 			).catch(
 				(err) => {
-					console.log('error while creating account', err);
 					this.store.dispatch(new ErrorOccurredAction({
 						type: ACCOUNT_ERROR,
 						message: err.message
@@ -147,7 +143,6 @@ export class AccountEffectService {
 				this.accountService.updateAccount(action.payload.accountData, action.payload.userKey, action.payload.accountKey)
 			).catch(
 				(err) => {
-					console.log('error while updating account', err);
 					this.store.dispatch(new ErrorOccurredAction({
 						type: ACCOUNT_ERROR,
 						message: err.message
@@ -164,7 +159,6 @@ export class AccountEffectService {
 				this.accountService.deleteAccount(action.payload.userKey, action.payload.accountKey)
 			).catch(
 				(err) => {
-					console.log('error while deleting account', err);
 					this.store.dispatch(new ErrorOccurredAction({
 						type: ACCOUNT_ERROR,
 						message: err.message

@@ -1,7 +1,11 @@
 import {Injectable} from "@angular/core";
 import {AngularFireDatabase} from "angularfire2/database";
 import {Observable} from "rxjs/Observable";
-import {Subject} from "rxjs/Subject";
+import * as firebase from 'firebase';
+import {Subscription} from "rxjs/Subscription";
+import {ErrorOccurredAction, QUICKNOTE_ERROR} from "../store/actions/globalActions";
+import {Store} from "@ngrx/store";
+import {ApplicationState} from "../store/application-state";
 
 @Injectable()
 export class QuicknoteService {
@@ -11,7 +15,6 @@ export class QuicknoteService {
 	) { }
 
 	getQuicknotes(userKey: string) {
-		console.log('getting quicknotes in service');
 		return this.db.list('quicknotes/' + userKey);
 	}
 
@@ -19,12 +22,13 @@ export class QuicknoteService {
 		return this.getUserKey(email)
 			.switchMap(key => {
 				const quicknoteRef = this.db.database.ref(`quicknotes/${key}`);
-				console.log('ref: ', body)
 				return quicknoteRef.push({
 					body: body,
-					date_created: (new Date).getTime()
+					// firebase timestamp ensures accurate time sync with firebase
+					date_created: firebase.database.ServerValue.TIMESTAMP
 				});
 			});
+
 	}
 
 	deleteQuicknote(userKey: string, quicknoteKey: string) {

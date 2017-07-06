@@ -1,3 +1,46 @@
 .noteDetailSection {
 	margin-top: 30px;
 }
+
+.notes-nav {
+	background-color: #263238;
+}
+
+.title-input {
+	font-size: 30px;
+}
+
+.body-textarea {
+	padding-bottom: 10px;
+	padding-top: 10px;
+	border: 0;
+	resize: none;
+	border-bottom: 1px solid dimgrey;
+}
+
+.title-date {
+	margin-left: 8px;
+}
+
+.tiny-date {
+	font-size: 12px;
+}
+
+.body-textarea:focus {
+	outline: none;
+}
+
+.note-body {
+}
+
+.note-paragraph {
+	word-wrap: break-word;
+}
+
+.button-row {
+	margin-top: 50px;
+}
+
+.delete-button {
+	margin-right: 7px;
+}

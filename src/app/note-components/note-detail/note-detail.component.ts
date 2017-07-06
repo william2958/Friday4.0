@@ -9,20 +9,24 @@ import {Note} from "../../shared/models/note";
 import {DeleteNoteAction, LoadSingleNoteAction, UpdateNoteAction} from "../../store/actions/noteActions";
 import {mapStateToSingleNoteSelector} from "./mapStateToSingleNoteSelector";
 import * as _ from 'lodash';
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
 	selector: 'note-detail',
 	templateUrl: './note-detail.component.html',
 	styleUrls: ['./note-detail.component.css']
 })
-export class NoteDetailComponent implements OnInit {
+export class NoteDetailComponent implements OnInit, OnDestroy {
 
 	noteId: string;
 	userId: string;
 	note: Note;
 	notes$: Observable<Note[]>;
+	notesSubscription$: Subscription;
+	formatedBody: string[];
 
 	editNoteForm: FormGroup;
+	editMode: boolean;
 
 	constructor(
 		private store: Store<ApplicationState>,
@@ -42,8 +46,16 @@ export class NoteDetailComponent implements OnInit {
 			body: ['']
 		});
 
+		this.route
+			.queryParams
+			.first()
+			.subscribe(params => {
+				// Defaults to 0 if no query param provided.
+				this.editMode = (params['edit'] === 'true');
+			});
+
 		// Take notes from the notes available in the store
-		this.notes$.take(2).subscribe(
+		this.notesSubscription$ = this.notes$.take(2).subscribe(
 			notes => {
 
 				// This checks if the note was navigated to from the
@@ -72,6 +84,12 @@ export class NoteDetailComponent implements OnInit {
 						}
 					).unsubscribe();
 				}
+
+				// Now let's format the string
+				if (this.note) {
+					this.formatedBody = this.note.body.split('\n');
+				}
+
 			}
 		);
 
@@ -84,14 +102,18 @@ export class NoteDetailComponent implements OnInit {
 		});
 	}
 
+	editNote(edit: boolean) {
+		this.router.navigate(['/', 'home', 'notes', this.note.key, this.userId],
+			{queryParams: {edit: edit}});
+		this.editMode = edit === true;
+	}
+
 	saveNote() {
 		if (
 			this.note.title === this.editNoteForm.value.title &&
 			this.note.body === this.editNoteForm.value.body
 		) {
-			console.log('note the same.');
 		} else {
-			console.log('saving with: ', this.note);
 			this.store.dispatch(new UpdateNoteAction({
 				userKey: this.userId,
 				noteData: {
@@ -111,8 +133,8 @@ export class NoteDetailComponent implements OnInit {
 		this.router.navigate(['/', 'home', 'notes']);
 	}
 
-	back() {
-		this.router.navigate(['', 'home', 'notes']);
+	ngOnDestroy() {
+		this.notesSubscription$.unsubscribe();
 	}
 
 }

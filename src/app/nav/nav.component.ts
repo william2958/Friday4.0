@@ -1,10 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {ShowLoginModalAction, ShowSignupModalAction, SignOutAction} from "../store/actions/authActions";
+import {ShowLoginModalAction, ShowSignupModalAction} from "../store/actions/authActions";
 import {Store} from "@ngrx/store";
 import {ApplicationState} from "../store/application-state";
-import {Observable} from "rxjs/Observable";
-import {User} from "../shared/models/user";
-import {userSelector} from "./user-selector";
 
 @Component({
 	selector: 'nav-bar',
@@ -17,7 +14,6 @@ export class NavComponent implements OnInit {
 	}
 
 	ngOnInit() {
-
 	}
 
 	activateLoginModal() {

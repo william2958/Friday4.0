@@ -1,7 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 
+* {
+	font-family: 'Open Sans', 'Helvetica Neue', 'Times New Roman'
+}
+
 a:hover {
 	text-decoration: none;
+	cursor: pointer;
 }
 
 .success-toast {
@@ -16,11 +21,12 @@ a:hover {
 	background-color: red;
 }
 
-nav {
-}
-
 @media (min-width: 992px) and (max-width: 1199px) {
 	.container {
 		width: 90%;
 	}
+}
+
+body {
+	background-color: #fafafa;
 }

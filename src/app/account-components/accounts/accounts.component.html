@@ -1,57 +1,30 @@
 <div class="accounts-container">
 
-	<div class="navbar-fixed">
-		<nav class="accounts-nav">
-			<div class="nav-wrapper">
-				<form autocomplete="off">
-					<div class="input-field">
-						<input #searchInput (keyup)="search(searchInput.value)"
-							   id="search" type="search" required placeholder="Search Accounts">
-						<label class="label-icon search-input-icon" for="search"><i class="material-icons">search</i></label>
-						<i class="material-icons search-input" (click)="closeSearch()">close</i>
-					</div>
-				</form>
-			</div>
-		</nav>
-	</div>
-	<div class="searchResults" [style.border]="searchResults.length > 0 ? '1px solid black' : null">
-		<div *ngFor="let result of searchResults; let i = index"
-			 (click)="showDetail(result)" (mouseleave)="changeSearchBackground(-1)">
-			<!--<img [src]="'https://www.' + result.value + '/favicon.ico'"-->
-				<!--class="search-result-icon">-->
-			<div class="searchResult" (mouseover)="changeSearchBackground(i)"
-			[class.hovering]="i == hoveredResult">{{result.value}}</div>
-		</div>
-	</div>
+	<accounts-search
+		[accountKeys]="accountKeys$ | async"
+		[userKey]="(user$ | async)?.uid"></accounts-search>
 
-	<div class="accounts-list">
+	<accounts-option-bar
+		[accounts]="accounts$ | async"
+		[accountKeys]="accountKeys$ | async"
+		[sortBy]="sortBy"
+		[userKey]="(user$ | async)?.uid"
+		(updateSort)="updateSort($event)"></accounts-option-bar>
 
-		<div *ngIf="accounts$ | async as accounts" class="container">
-			<div *ngFor="let account of viewAccounts">
-				<account [account]="account" (click)="goToAccount(account.key)"></account>
-			</div>
-		</div>
-
-		<ng-template #loadingAccounts>
-			<div class="progress">
-				<div class="indeterminate"></div>
-			</div>
-		</ng-template>
-
-	</div>
+	<accounts-list
+		*ngIf="accounts$ | async"
+		[accounts]="accounts$ | async"
+		[reverse]="sortBy === 'ORDER_BY_NEWEST'"
+		[userKey]="(user$ | async)?.uid"
+		[pin]="pin$ | async"
+		[sortBy]="sortBy"></accounts-list>
 
 	<div class="fixed-action-btn">
-		<a (click)="addAccount()" class="btn-floating btn-large btn red"
+		<a [routerLink]="['/', 'home', 'accounts', 'new']"
+		   class="btn-floating btn-large btn red"
 		   data-position="left" title="Add Account">
 			<i class="large material-icons">add</i>
 		</a>
 	</div>
-
-	<ul class="pagination">
-		<li class="waves-effect"><a (click)="prevPage()"><i class="material-icons">chevron_left</i></a></li>
-		<li class="active" *ngFor="let page of numPages"><a>{{page}}</a></li>
-		<!--<li class="waves-effect"><a>2</a></li>-->
-		<li class="waves-effect"><a (click)="nextPage()"><i class="material-icons">chevron_right</i></a></li>
-	</ul>
 
 </div>

@@ -1,0 +1,55 @@
+.landing_page {
+	background: url(../../assets/images/landing_background2.jpg) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	height: 94.5vh;
+	overflow: hidden;
+	width: 100%;
+}
+
+.quicknote-header {
+	text-align: center;
+	color: white;
+	font-size: 40px;
+	letter-spacing: 2px;
+	margin-top: 100px;
+}
+
+.quicknote-form {
+	width: 500px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 50px;
+}
+
+.landing-title-input {
+	border-bottom: 3px solid white;
+	color: white;
+}
+
+.landing-body-textarea {
+	border-bottom: 3px solid white;
+	color: white;
+}
+
+.landing-label {
+	color: white;
+}
+
+.button-row {
+	text-align: center;
+}
+
+.create-button {
+	background-color: transparent;
+	border: 1px solid white;
+	margin-top: 70px;
+}
+
+.error-row {
+	text-align: center;
+	color: red;
+	margin-bottom: 20px;
+}

@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit} from '@angular/core';
 import {Store} from "@ngrx/store";
 import {ApplicationState} from "../../store/application-state";
 import {
@@ -14,6 +14,7 @@ import {userSelector} from "../../nav/user-selector";
 import {Quicknote} from "../../shared/models/quicknote";
 import {mapStateToQuicknotesSelector} from "./quicknoteSelectors";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {MaterializeAction} from "angular2-materialize";
 
 @Component({
 	selector: 'quicknotes',
@@ -27,16 +28,17 @@ export class QuicknotesComponent implements OnInit, OnDestroy {
 	user: User;
 
 	quicknotes$: Observable<Quicknote[]>;
-	quicknotesSubscription$: Subscription;
 
 	quicknoteForm: FormGroup;
+
+	deleteAllActions = new EventEmitter<string|MaterializeAction>();
 
 	constructor(
 		private store: Store<ApplicationState>,
 	    private fb: FormBuilder
 	) {
 		this.quicknoteForm = this.fb.group({
-			body: ['body', Validators.required]
+			body: ['', Validators.required]
 		});
 	}
 
@@ -49,21 +51,14 @@ export class QuicknotesComponent implements OnInit, OnDestroy {
 			user => {
 				if (user) {
 					this.user = _.cloneDeep(user);
-					console.log('getting quicknotes...');
 					this.store.dispatch(new LoadQuicknotesAction(this.user.uid));
 				}
 			}
 		);
 
-		this.quicknotesSubscription$ = this.quicknotes$.subscribe(
-			quicknotes => {
-				console.log('quicknotes recieved in component: ', quicknotes);
-			}
-		);
 	}
 
 	deleteQuicknote(quicknoteKey: string) {
-		console.log('deleting single quicknote:', quicknoteKey);
 		if (this.user) {
 			this.store.dispatch(new DeleteQuicknoteAction({
 				userKey: this.user.uid,
@@ -81,6 +76,10 @@ export class QuicknotesComponent implements OnInit, OnDestroy {
 		}
 	}
 
+	showDeleteAllModal() {
+		this.deleteAllActions.emit({action: 'modal', params: ['open']});
+	}
+
 	deleteAll() {
 		if (this.user) {
 			this.store.dispatch(new DeleteAllQuicknotesAction(this.user.uid));
@@ -90,7 +89,6 @@ export class QuicknotesComponent implements OnInit, OnDestroy {
 	ngOnDestroy() {
 
 		this.userSubscription$.unsubscribe();
-		this.quicknotesSubscription$.unsubscribe();
 
 	}
 

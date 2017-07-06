@@ -2,11 +2,8 @@ import {Injectable} from "@angular/core";
 import {CanActivate, Router} from "@angular/router";
 import {Store} from "@ngrx/store";
 import {ApplicationState} from "../../store/application-state";
-import {userSelector} from "../../nav/user-selector";
-import {User} from "../models/user";
-import {Observable} from "rxjs/Observable";
 import {AngularFireAuth} from "angularfire2/auth";
-import {GetFirebaseUserAction, UpdateUserAction} from "../../store/actions/authActions";
+import {GetFirebaseUserAction} from "../../store/actions/authActions";
 import {ERROR_TOAST, ShowToastAction} from "../../store/actions/globalActions";
 
 @Injectable()

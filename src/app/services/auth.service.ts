@@ -5,9 +5,9 @@ import {Subject} from "rxjs/Subject";
 import {AngularFireDatabase} from "angularfire2/database";
 import {Store} from "@ngrx/store";
 import {ApplicationState} from "../store/application-state";
-import {GetFirebaseUserAction, UpdateUserAction, UserSignedInAction} from "../store/actions/authActions";
+import {GetFirebaseUserAction} from "../store/actions/authActions";
 import {Router} from "@angular/router";
-import {User} from "../shared/models/user";
+import * as firebase from 'firebase/app';
 
 @Injectable()
 export class AuthService {
@@ -42,11 +42,38 @@ export class AuthService {
 						email: email,
 						first_time: true,
 			            email_confirmed: false,
-						date_created: (new Date).getTime()
+						// firebase timestamp ensures accurate time sync with firebase
+						date_created: firebase.database.ServerValue.TIMESTAMP
 					});
 					this.store.dispatch(new GetFirebaseUserAction(res.uid));
 				}
 			);
+	}
+
+	loginWithGoogle() {
+		return this.auth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+	}
+
+	getGoogleUser(user) {
+		this.db.database.ref('users').child(user.user.uid).once('value', snapshot => {
+			if (snapshot.val() !== null) {
+				// console.log('user already created');
+			} else {
+				// console.log('user needs to be created');
+				const usersRef = this.db.database.ref('users');
+				usersRef.child(user.user.uid).set({
+					first_name: user.additionalUserInfo.profile.given_name,
+					last_name: user.additionalUserInfo.profile.family_name,
+					email: user.additionalUserInfo.profile.email,
+					first_time: true,
+					email_confirmed: user.additionalUserInfo.profile.verified_email,
+					// firebase timestamp ensures accurate time sync with firebase
+					date_created: firebase.database.ServerValue.TIMESTAMP
+				});
+				this.store.dispatch(new GetFirebaseUserAction(user.user.uid));
+			}
+		});
+		return Observable.of(user.user.uid);
 	}
 
 	logout() {

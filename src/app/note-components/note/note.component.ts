@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Note} from "../../shared/models/note";
 
 @Component({
@@ -9,10 +9,26 @@ import {Note} from "../../shared/models/note";
 export class NoteComponent implements OnInit {
 
 	@Input() note: Note;
+	@Output() editNote = new EventEmitter();
+	@Output() deleteNote = new EventEmitter();
 
 	constructor() { }
 
 	ngOnInit() {
+	}
+
+	// If we want to just view the note
+	goToNote() {
+		this.editNote.emit({key: this.note.key, edit: false});
+	}
+
+	// If we want to directly edit the note
+	goToEditNote() {
+		this.editNote.emit({key: this.note.key, edit: true});
+	}
+
+	deleteThisNote() {
+		this.deleteNote.emit(this.note.key);
 	}
 
 }

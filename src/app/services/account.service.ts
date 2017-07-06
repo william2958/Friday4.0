@@ -5,6 +5,7 @@ import {FirebaseListFactoryOpts} from "angularfire2/interfaces";
 import {Account} from "../shared/models/account";
 import {CreateAccountModel} from "../shared/models/createAccount";
 import {Subject} from "rxjs/Subject";
+import * as firebase from 'firebase';
 
 export const ACCOUNTS_PAGE_SIZE = 10;
 export const ORDER_BY_KEY = 'ORDER_BY_KEY';
@@ -118,7 +119,8 @@ export class AccountService {
 			password: accountsToSave.password,
 			website: accountsToSave.website,
 			account_notes: accountsToSave.account_notes,
-			date_created: (new Date).getTime()
+			// firebase timestamp ensures accurate time sync with firebase
+			date_created: firebase.database.ServerValue.TIMESTAMP
 		};
 		dataToSave['accountsPerUser/' + userKey + '/' + newAccountKey] = accountsToSave.website;
 
@@ -207,8 +209,6 @@ export class AccountService {
 	}
 
 	firebaseUpdateAccount(dataToSave) {
-
-		console.log('firebase update account with: ', dataToSave);
 
 		const subject = new Subject();
 

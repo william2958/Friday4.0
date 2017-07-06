@@ -1,0 +1,8 @@
+<div class="row container accounts-list">
+
+	<account *ngFor="let account of accounts" class="col s12 m6"
+		[account]="account"
+		(editAccount)="goToAccount($event)"
+		(deleteAccount)="deleteAccount($event)"></account>
+
+</div>

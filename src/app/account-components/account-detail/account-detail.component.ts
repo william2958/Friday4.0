@@ -128,9 +128,7 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
 			this.account.password === this.editAccountForm.value.password &&
 			this.account.account_notes === this.editAccountForm.value.account_notes
 		) {
-			console.log('account the same.');
 		} else {
-			console.log('saving with: ', this.account);
 			const encryptedPassword = this.encryptService.encryptString(this.editAccountForm.value.password, this.pin);
 			this.store.dispatch(new UpdateAccountAction({
 				userKey: this.userId,

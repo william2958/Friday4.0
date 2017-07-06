@@ -1,8 +1,3 @@
-.side-nav {
-	border-right: 1px solid black;
-	height: 100%
-}
-
 #logo:hover {
 	background-color: transparent;
 }
@@ -19,11 +14,19 @@
 	padding-top: 20px;
 	padding-bottom: 20px;
 	text-align: center;
-	background-color: #c3dfed;
+	/*background-color: #c3dfed;*/
 	margin-bottom: 10px;
 }
 
 #logo-container > a {
 	/* logo-image height */
 	height: 90px;
+}
+
+.active-link {
+	background-color: #eceff1;
+}
+
+a:visited {
+	text-decoration: none;
 }

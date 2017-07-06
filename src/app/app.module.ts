@@ -49,6 +49,14 @@ import { NewNoteComponent } from './note-components/notes-new/notes-new.componen
 import { NoteDetailComponent } from './note-components/note-detail/note-detail.component';
 import { QuicknotesComponent } from './quicknote-components/quicknotes/quicknotes.component';
 import { QuicknoteComponent } from './quicknote-components/quicknote/quicknote.component';
+import { NotesListComponent } from './note-components/notes-list/notes-list.component';
+import { NotesOptionBarComponent } from './note-components/notes-option-bar/notes-option-bar.component';
+import { NotesSearchComponent } from './note-components/notes-search/notes-search.component';
+import {Autosize} from 'angular2-autosize/src/autosize.directive';
+import { AccountsListComponent } from './account-components/accounts-list/accounts-list.component';
+import { AccountsOptionBarComponent } from './account-components/accounts-option-bar/accounts-option-bar.component';
+import { AccountsSearchComponent } from './account-components/accounts-search/accounts-search.component';
+import {PinGuard} from "./shared/guards/pin.guard";
 
 export function storeReducer(state: ApplicationState, action: Action): ApplicationState {
 	return {
@@ -78,7 +86,14 @@ export function storeReducer(state: ApplicationState, action: Action): Applicati
 		NewNoteComponent,
 		NoteDetailComponent,
 		QuicknotesComponent,
-		QuicknoteComponent
+		QuicknoteComponent,
+		NotesListComponent,
+		NotesOptionBarComponent,
+		NotesSearchComponent,
+		Autosize,
+		AccountsListComponent,
+		AccountsOptionBarComponent,
+		AccountsSearchComponent
 	],
 	imports: [
 		BrowserModule,
@@ -113,7 +128,8 @@ export function storeReducer(state: ApplicationState, action: Action): Applicati
 		AccountService,
 		EncryptService,
 		NoteService,
-		NoteEffectService
+		NoteEffectService,
+		PinGuard
 	],
 	bootstrap: [FridayComponent]
 })

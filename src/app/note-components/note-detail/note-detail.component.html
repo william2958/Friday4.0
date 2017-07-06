@@ -1,35 +1,69 @@
 <nav class="notes-nav">
 	<div class="nav-wrapper container">
-		<a class="brand-logo" (click)="back()">
+		<a class="brand-logo" [routerLink]="['/', 'home', 'notes']">
 			<i class="material-icons">arrow_back</i>
-			Note Details
+			<div *ngIf="note" class="title-date center">
+				{{note.date_created | date: 'longDate'}}
+				<span class="tiny-date">{{note.date_created | date: 'mediumTime'}}</span>
+			</div>
 		</a>
 	</div>
 </nav>
 
-<div class="container noteDetailSection">
+<!-- Editing the note -->
+<div class="container noteDetailSection" *ngIf="editMode">
+
+	<div class="fixed-action-btn horizontal">
+		<a (click)="editNote(false)" class="btn-floating btn-large red">
+			<i class="large material-icons">clear</i>
+		</a>
+	</div>
+
 	<form (ngSubmit)="saveNote()" autocomplete="off" novalidate [formGroup]="editNoteForm">
+
 		<div class="row">
-			<div class="input-field col s6">
-				<i class="material-icons prefix">language</i>
-				<input formControlName="title" id="title" type="text" class="validate">
+			<div class="input-field col s12">
+				<input formControlName="title" id="title" type="text" class="title-input">
 				<label for="title" class="active">Title</label>
 			</div>
-			<div class="input-field col s6">
-				<i class="material-icons prefix">email</i>
-				<input formControlName="body" id="body" type="text" class="validate">
+		</div>
+
+		<div class="row">
+			<div class="input-field col s12">
+				<textarea autosize formControlName="body" id="body" class="body-textarea"></textarea>
 				<label for="body" class="active">Body</label>
 			</div>
 		</div>
 
-		<button class="btn waves-effect waves-light" type="submit" name="action">Save Note
-			<i class="material-icons right">send</i>
-		</button>
+		<div class="button-row">
+			<button class="btn waves-effect waves-light right" type="submit" name="action">Save Note
+				<i class="material-icons right">send</i>
+			</button>
+			<button (click)="deleteNote()" class="btn red waves-effect waves-light right delete-button">
+				Delete Note
+			</button>
+		</div>
 	</form>
 
-	<button (click)="deleteNote()" class="btn red waves-effect waves-light" style="margin-top: 20px">
-		Delete Note
-	</button>
+</div>
+
+<!-- Just viewing the note -->
+<div class="container noteDetailSection" *ngIf="!editMode && (note != undefined)">
+	<div class="fixed-action-btn horizontal">
+		<a (click)="editNote(true)" class="btn-floating btn-large red">
+			<i class="large material-icons">mode_edit</i>
+		</a>
+	</div>
+
+	<div class="note-body">
+		<h2>{{note.title}}</h2>
+
+		<hr>
+
+		<p class="note-paragraph" *ngFor="let paragraph of formatedBody">
+			{{paragraph}}
+		</p>
+	</div>
 
 </div>
 

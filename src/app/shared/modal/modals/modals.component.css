@@ -1,5 +1,6 @@
 .modal-header {
 	text-align: center;
+	background-color: #263238;
 }
 
 .modal-body {
@@ -8,7 +9,7 @@
 }
 
 .modal-content {
-	border-radius: 0px;
+	border-radius: 0;
 }
 
 .logo {
@@ -33,6 +34,108 @@ img {
 	display: inline;
 }
 
-.modal-header {
-	background-color: blue;
+.login-modal {
+	width: 400px;
+	height: 460px;
+	margin-top: 100px;
+}
+
+.error-row {
+	text-align: center;
+	margin-top: 10px;
+}
+
+.error-message {
+	color: red;
+}
+
+.modal-title {
+	width: 100%;
+}
+
+.login-form {
+	margin-top: 50px;
+	text-align: center;
+}
+
+.signup-form {
+	margin-top: 20px;
+	text-align: center;
+}
+
+.input-field {
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.password-field {
+	margin-top: 25px;
+}
+
+.login-button {
+	margin-top: 15px;
+	background-color: #263238;
+}
+
+.google-button {
+	padding: 0;
+	width: 80%;
+	border: 0;
+}
+
+.google-button-image {
+	width: 50%;
+}
+
+.oauth-row {
+	text-align: center;
+	margin-top: 20px;
+}
+
+
+/* SIGN UP MODAL */
+.signup-modal {
+	width: 400px;
+	height: 520px;
+	margin-top: 100px;
+}
+
+.signup-input {
+	margin-bottom: 5px;
+}
+
+
+/* PIN MODAL */
+.pin-modal {
+	width: 300px;
+	height: 320px;
+	margin-top: 20px;
+}
+
+.pin-form {
+	margin-top: 55px;
+	text-align: center;
+}
+
+.pin-input-field {
+	width: 200px;
+}
+
+.pin-button-row {
+	text-align: center;
+	margin-top: 40px;
+}
+
+.submit-pin-button {
+	background-color: #263238;
+}
+
+.cancel-pin-button {
+	background-color: #263238;
+}
+
+.pin-error {
+	color: red;
+	text-align: center;
 }

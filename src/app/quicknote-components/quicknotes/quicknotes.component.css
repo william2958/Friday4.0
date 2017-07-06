@@ -1,39 +1,57 @@
-.notes-list {
-	margin-top: 80px;
+.quicknotes-nav {
+	background-color: #263238;
 }
 
-.collapsible-header {
-	font-size: 1.3em;
+.delete-all-button:hover {
+	color: white;
 }
 
-.notes-container {
-	position: relative;
+.create-quicknote {
+	margin-top: 20px;
 }
 
-.searchResults {
-	top: 64px;
-	left: 2.5%;
-	position: absolute;
-	width: 95%;
-	z-index: 800;
-	background-color: white;
-	font-size: 1.3em;
+.quicknotes-list {
+	margin-top: 20px;
 }
 
-/* Individual result */
-.searchResult {
-	padding-left: 20px;
+.create-quicknote-button {
+	margin-top: 15px;
 }
 
-.search-result-icon {
-	width: 16px;
-	height: 16px;
+.modal-header {
+	font-size: 20px;
+	border-bottom: 0;
+	font-weight: bold;
+	padding: 0;
+	margin-bottom: 15px;
 }
 
+.modal-body {
+	overflow-y: scroll;
+}
 
+.delete-all-modal {
+	width: 500px;
+	height: 235px;
+	margin-top: 20px;
+	padding: 25px;
+}
 
-.hovering {
-	background-color: grey;
+.delete-all {
+	background-color: #ff5252;
+	color: white;
+}
+
+#cancel-button {
+	margin-right: 5px;
+}
+
+.delete-warning {
+	background-color: #fbe9e7;
+	color: #d50000;
+	padding: 12px 25px 12px 25px;
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
 
 @media (min-width: 992px) {

@@ -1,4 +1,11 @@
-<div class="quicknote-container">
-	quicknote: {{quicknote.body}}
-	<button (click)="deleteNote()">Delete</button>
+<div class="card horizontal">
+	<div class="card-stacked">
+		<div class="card-content">
+			<p class="quicknote-paragraph">{{quicknote.body}}</p>
+		</div>
+		<div class="card-action">
+			<p class="left">{{quicknote.date_created | date: 'j MMM dd, y'}}</p>
+			<a class="right" id="delete-button" (click)="deleteNote()">Delete</a>
+		</div>
+	</div>
 </div>

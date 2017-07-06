@@ -21,7 +21,6 @@ export class HomeComponent implements OnInit {
 
 	shownav() {
 		this.sidenavActions.emit({action: "sideNav", params: ['show']});
-		console.log('showing nav');
 	}
 
 }

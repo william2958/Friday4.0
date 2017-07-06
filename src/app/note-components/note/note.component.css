@@ -1,0 +1,33 @@
+.card-action {
+	text-align: right;
+}
+
+#delete-button {
+	color: red;
+}
+
+.date {
+	color: black;
+}
+
+.card .card-title {
+	color: black;
+}
+
+.card .card-content p {
+	color: black;
+}
+
+.card-content:hover {
+	cursor: pointer;
+}
+
+.note-card {
+	background-color: white;
+}
+
+.card {
+	box-shadow: 0 4px 4px 0 rgba(0,0,0,0.14),
+	0 3px 5px 0 rgba(0,0,0,0.12),
+	0 3px 3px -2px rgba(0,0,0,0.2);
+}

@@ -91,7 +91,6 @@ function handleErrorOccuredAction(state: UiState, action: ErrorOccurredAction): 
 		newUiState.errors[action.payload.type] = [];
 	}
 	newUiState.errors[action.payload.type].push(action.payload.message);
-	console.log('updated errors array: ', newUiState.errors);
 	return newUiState;
 }
 

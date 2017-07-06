@@ -3,17 +3,28 @@
 	<div class="navbar-fixed">
 		<nav class="quicknotes-nav">
 			<div class="nav-wrapper container">
-				<a href="#!" class="brand-logo"><i class="material-icons">cloud</i>Quicknotes</a>
+				<a class="brand-logo">Quicknotes</a>
 				<ul class="right hide-on-med-and-down">
-					<li><a (click)="deleteAll()" data-toggle="tooltip" data-placement="left" title="Delete All">
-						<i class="material-icons">delete_sweep</i></a>
-					</li>
+					<li><a class="delete-all-button" (click)="showDeleteAllModal()"><i class="material-icons right">delete_sweep</i>Delete All</a></li>
 				</ul>
 			</div>
 		</nav>
 	</div>
 
-	<div class="notes-list">
+	<div class="container create-quicknote">
+		<form (ngSubmit)="createQuicknote()" autocomplete="off" novalidate [formGroup]="quicknoteForm">
+			<div class="input-field">
+				<textarea  id="body" formControlName="body" type="text"
+						  class="materialize-textarea" data-length="160"></textarea>
+				<label for="body">Note:</label>
+			</div>
+			<button type="submit" class="btn btn-primary create-quicknote-button right">Create Quicknote</button>
+		</form>
+	</div>
+
+	<hr>
+
+	<div class="quicknotes-list">
 
 		<div *ngIf="quicknotes$ | async as quicknotes" class="container">
 			<div *ngFor="let note of quicknotes">
@@ -23,14 +34,22 @@
 
 	</div>
 
-	<form (ngSubmit)="createQuicknote()" autocomplete="off" novalidate [formGroup]="quicknoteForm">
-		<fieldset>
-			<div class="form-field">
-				<label>Note:</label>
-				<input type="text" name="note" formControlName="body">
-			</div>
-		</fieldset>
-		<button type="submit" class="btn btn-primary">Create Quicknote</button>
-	</form>
+</div>
+
+<div #deleteAllModal materialize="modal" [materializeParams]="[{dismissible: false, inDuration: 200}]"
+	 [materializeActions]="deleteAllActions" class="modal delete-all-modal">
+	<div class="modal-header">
+		<h5 class="modal-title title">Delete all quicknotes</h5>
+	</div>
+
+
+	<div class="delete-warning">
+		After you delete your quicknotes, it's permanently deleted. Quicknotes cannot be recovered.
+	</div>
+
+	<div class="modal-footer">
+		<a (click)="deleteAll()" class="modal-action modal-close waves-effect waves-red btn-flat delete-all">Delete All</a>
+		<a class="modal-action modal-close waves-effect btn-flat" id="cancel-button">CANCEL</a>
+	</div>
 
 </div>

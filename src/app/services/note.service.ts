@@ -5,8 +5,9 @@ import {CreateNoteModel} from "../shared/models/createNote";
 import {FirebaseListFactoryOpts} from "angularfire2/interfaces";
 import {Observable} from "rxjs/Observable";
 import {Subject} from "rxjs/Subject";
+import * as firebase from 'firebase';
 
-export const NOTES_PAGE_SIZE = 10;
+export const NOTES_PAGE_SIZE = 12;
 
 @Injectable()
 export class NoteService {
@@ -114,7 +115,8 @@ export class NoteService {
 		dataToSave['notes/' + newNoteKey] = {
 			title: notesToSave.title,
 			body: notesToSave.body,
-			date_created: (new Date).getTime()
+			// firebase timestamp ensures accurate time sync with firebase
+			date_created: firebase.database.ServerValue.TIMESTAMP
 		};
 		dataToSave['notesPerUser/' + userKey + '/' + newNoteKey] = notesToSave.title;
 
@@ -202,8 +204,6 @@ export class NoteService {
 	}
 
 	firebaseUpdateNote(dataToSave) {
-
-		console.log('firebase update account with: ', dataToSave);
 
 		const subject = new Subject();
 

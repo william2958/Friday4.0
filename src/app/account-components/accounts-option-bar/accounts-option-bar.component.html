@@ -1,0 +1,20 @@
+<div class="option-bar container">
+
+	<ul class="pagination left">
+		<li class="waves-effect"><a (click)="prevPage()"><i class="material-icons">chevron_left</i></a></li>
+		<!--<li class="waves-effect" *ngFor="let page of numPages"><a>{{page}}</a></li>-->
+		<!--<li class="waves-effect"><a>2</a></li>-->
+		<li class="waves-effect"><a (click)="nextPage()"><i class="material-icons">chevron_right</i></a></li>
+	</ul>
+
+	<div class="input-field select-sort right">
+		<select materialize="material_select" (change)="changeSort($event.target.value)">
+			<option value="newest" [disabled]="sortBy === 'ORDER_BY_NEWEST'"
+					[selected]="sortBy === 'ORDER_BY_NEWEST'">newest</option>
+			<option value="oldest" [disabled]="sortBy === 'ORDER_BY_OLDEST'"
+					[selected]="sortBy === 'ORDER_BY_OLDEST'">oldest</option>
+		</select>
+		<label>Sort By: </label>
+	</div>
+
+</div>

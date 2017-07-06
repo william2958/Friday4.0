@@ -13,15 +13,12 @@ export class QuicknoteComponent implements OnInit {
 	@Input() quicknote: Quicknote;
 	@Output() deleteQuicknote = new EventEmitter();
 
-	constructor(
-		private store: Store<ApplicationState>
-	) { }
+	constructor() { }
 
 	ngOnInit() {
 	}
 
 	deleteNote() {
-		console.log('trying to delete: ', this.quicknote.key);
 		this.deleteQuicknote.emit(this.quicknote.key);
 	}
 

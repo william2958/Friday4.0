@@ -11,6 +11,7 @@ import {AccountDetailComponent} from "./account-components/account-detail/accoun
 import {NewNoteComponent} from "./note-components/notes-new/notes-new.component";
 import {NoteDetailComponent} from "./note-components/note-detail/note-detail.component";
 import {QuicknotesComponent} from "./quicknote-components/quicknotes/quicknotes.component";
+import {PinGuard} from "./shared/guards/pin.guard";
 export const routes: Routes = [
 
 	{

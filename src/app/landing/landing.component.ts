@@ -4,7 +4,7 @@ import {ApplicationState} from "../store/application-state";
 import {Store} from "@ngrx/store";
 import {CreateQuicknoteAction} from "../store/actions/quicknoteActions";
 import {Observable} from "rxjs/Observable";
-import {QUICKNOTE_ERROR} from "../store/actions/globalActions";
+import {ClearErrorAction, QUICKNOTE_ERROR} from "../store/actions/globalActions";
 
 @Component({
 	selector: 'landing',
@@ -23,8 +23,8 @@ export class LandingComponent implements OnInit {
 	) {
 
 		this.quicknoteForm = this.fb.group({
-			email: ['william2958@gmail.com', Validators.required],
-			body: ['body', Validators.required]
+			email: ['', Validators.required],
+			body: ['', Validators.required]
 		});
 
 		this.errors$ = store.select(quicknoteErrorSelector);
@@ -36,10 +36,12 @@ export class LandingComponent implements OnInit {
 	}
 
 	createQuicknote() {
+		this.store.dispatch(new ClearErrorAction(QUICKNOTE_ERROR));
 		this.store.dispatch(new CreateQuicknoteAction({
 			email: this.quicknoteForm.value.email,
 			body: this.quicknoteForm.value.body
 		}));
+		this.quicknoteForm.reset();
 	}
 
 }

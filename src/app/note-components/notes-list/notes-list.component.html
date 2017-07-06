@@ -1,0 +1,6 @@
+<div class="row container notes-list">
+	<note *ngFor="let note of notes" class="col s12 m6"
+		[note]="note"
+		(editNote)="goToNote($event)"
+		(deleteNote)="deleteNote($event)"></note>
+</div>
