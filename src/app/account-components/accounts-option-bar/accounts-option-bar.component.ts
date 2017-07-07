@@ -3,7 +3,6 @@ import {Account} from "../../shared/models/account";
 import {ApplicationState} from "../../store/application-state";
 import {Store} from "@ngrx/store";
 import {ORDER_BY_NEWEST, ORDER_BY_OLDEST} from "../../services/account.service";
-import {LoadInitialNotesAction} from "../../store/actions/noteActions";
 import {
 	LoadInitialAccountsAction, LoadNextAccountsAction,
 	LoadPrevAccountsAction

@@ -17,6 +17,8 @@ import {
 import {User} from "../../models/user";
 import {MaterializeAction} from "angular2-materialize";
 import {pinSetSelector} from "../../../store/selectors/pinSelector";
+import * as firebase from 'firebase';
+import {LoadInitialAccountsAction} from "../../../store/actions/accountActions";
 
 @Component({
 	selector: 'modals',
@@ -32,6 +34,7 @@ export class ModalsComponent implements OnInit {
 	loginErrors$: Observable<string[]>;
 	signupErrors$: Observable<string[]>;
 	pinError: string;
+	forgotError: string;
 
 	loginForm: FormGroup;
 	signupForm: FormGroup;
@@ -41,6 +44,7 @@ export class ModalsComponent implements OnInit {
 	loginModalActions = new EventEmitter<string|MaterializeAction>();
 	signupModalActions = new EventEmitter<string|MaterializeAction>();
 	pinModalActions = new EventEmitter<string|MaterializeAction>();
+	forgotModalActions = new EventEmitter<string|MaterializeAction>();
 
 	@ViewChildren('pinInput') pinInput;
 
@@ -84,6 +88,7 @@ export class ModalsComponent implements OnInit {
 
 		this.showPinModal$.subscribe(
 			() => {
+				this.pinError = '';
 				this.pinModalActions.emit({action: 'modal', params: ['open']});
 				this.pinInput.first.nativeElement.focus();
 			}
@@ -152,14 +157,43 @@ export class ModalsComponent implements OnInit {
 		this.user$ = this.store.select(userSelector);
 		this.user$.take(2).subscribe(
 			user => {
-				if (user) {
-					this.loginModalActions.emit({action: 'modal', params: ['close']});
-					this.loginForm.reset();
-					this.store.dispatch(new ShowToastAction([SUCCESS_TOAST, 'Login Successful!']));
-					this.router.navigate(['/', 'home', 'notes']);
+				const firebaseUser = firebase.auth().currentUser;
+				if (firebaseUser) {
+					const verified = firebaseUser.emailVerified;
+					if (user && verified) {
+						this.loginModalActions.emit({action: 'modal', params: ['close']});
+						this.loginForm.reset();
+						this.store.dispatch(new ShowToastAction([SUCCESS_TOAST, 'Login Successful!']));
+						this.router.navigate(['/', 'home', 'notes']);
+					} else if (!verified && user) {
+						this.store.dispatch(new ErrorOccurredAction({
+							type: LOGIN_ERROR,
+							message: 'Email has not been verified!'
+						}));
+					}
 				}
 			}
 		);
+	}
+
+	forgotPassword() {
+		this.loginModalActions.emit({action: 'modal', params: ['close']});
+		this.forgotModalActions.emit({action: 'modal', params: ['open']});
+	}
+
+	sendResetEmail(email: string) {
+		firebase.auth().sendPasswordResetEmail(email).then(() => {
+			console.log('email sent.');
+			this.store.dispatch(new ShowToastAction([SUCCESS_TOAST, 'Email sent!']));
+			this.forgotModalActions.emit({action: 'modal', params: ['close']});
+		}, (error: any) => {
+			console.log('error found', error);
+			if (error.code === 'auth/user-not-found') {
+				this.forgotError = 'Could not find an account with that email.';
+			} else {
+				this.forgotError = error.message;
+			}
+		});
 	}
 
 	loginWithGoogle() {
@@ -196,10 +230,18 @@ export class ModalsComponent implements OnInit {
 			this.store.select(userSelector).take(2).subscribe(
 				user => {
 					if (user) {
-						this.signupModalActions.emit({action: 'modal', params: ['close']});
-						this.signupForm.reset();
-						this.store.dispatch(new ShowToastAction([SUCCESS_TOAST, 'Signup Successful!']));
-						this.router.navigate(['/', 'home', 'notes']);
+						firebase.auth().currentUser.sendEmailVerification().then(() => {
+							this.store.dispatch(new ShowToastAction([SUCCESS_TOAST, 'Signup Successful!']));
+							this.store.dispatch(new ShowToastAction([SUCCESS_TOAST, 'Email confirmation sent!']));
+							this.signupModalActions.emit({action: 'modal', params: ['close']});
+							this.signupForm.reset();
+						}, error => {
+							this.store.dispatch(new ErrorOccurredAction({
+								type: SIGNUP_ERROR,
+								message: 'Something went wrong when sending the email verification'
+							}));
+						});
+						// this.router.navigate(['/', 'home', 'notes']);
 					}
 				}
 			);
@@ -224,6 +266,7 @@ export class ModalsComponent implements OnInit {
 		this.loginModalActions.emit({action: 'modal', params: ['close']});
 		this.signupModalActions.emit({action: 'modal', params: ['close']});
 		this.pinModalActions.emit({action: 'modal', params: ['close']});
+		this.forgotModalActions.emit({action: 'modal', params: ['close']});
 	}
 
 }

@@ -2,10 +2,6 @@ import {Injectable} from "@angular/core";
 import {AngularFireDatabase} from "angularfire2/database";
 import {Observable} from "rxjs/Observable";
 import * as firebase from 'firebase';
-import {Subscription} from "rxjs/Subscription";
-import {ErrorOccurredAction, QUICKNOTE_ERROR} from "../store/actions/globalActions";
-import {Store} from "@ngrx/store";
-import {ApplicationState} from "../store/application-state";
 
 @Injectable()
 export class QuicknoteService {

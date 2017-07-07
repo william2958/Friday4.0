@@ -12,6 +12,7 @@ import {mapStateToAccountKeysSelector, mapStateToAccountsSelector} from "./accou
 import {ORDER_BY_NEWEST} from "../../services/account.service";
 import {Subscription} from "rxjs/Subscription";
 import {pinSelector, pinSetSelector} from "../../store/selectors/pinSelector";
+import {Router} from "@angular/router";
 
 @Component({
 	selector: 'accounts',
@@ -32,7 +33,9 @@ export class AccountsComponent implements OnInit, OnDestroy {
 	// Subscriptions
 	userSubscription$: Subscription;
 	pinSetSubscription$: Subscription;
+	pinSubscription$: Subscription;
 	pin$;
+	currentPin: string;
 
 	// How to sort the accounts (newest, oldest)
 	sortBy: string = ORDER_BY_NEWEST;
@@ -75,6 +78,15 @@ export class AccountsComponent implements OnInit, OnDestroy {
 		this.pinSetSubscription$ = this.store.select(pinSetSelector).subscribe(pinSet => {
 			if (!pinSet) {
 				this.store.dispatch(new ShowPinModalAction());
+			}
+		});
+
+		this.pinSubscription$ = this.store.select(pinSelector).subscribe(pin => {
+			if (pin) {
+				this.store.dispatch(new LoadInitialAccountsAction({
+					userKey: this.userKey,
+					sortBy: this.sortBy
+				}));
 			}
 		});
 

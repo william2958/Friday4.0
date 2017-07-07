@@ -24,6 +24,17 @@ export class NewAccountComponent implements OnInit, OnDestroy {
 	pinSubscription$: Subscription;
 	pinSetSubscription$: Subscription;
 
+	passwordField;
+	generatePasswordLength = 12;
+	uppercaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	lowercaseLetters = "abcdefghijklmnopqrstuvwxyz";
+	numbers = "0123456789";
+	symbols = "!@#$%^&*?";
+	uppercaseChecked = true;
+	lowercaseChecked = true;
+	numbersChecked = true;
+	symbolsChecked = false;
+
 	constructor(
 		private store: Store<ApplicationState>,
 	    private router: Router,
@@ -64,6 +75,30 @@ export class NewAccountComponent implements OnInit, OnDestroy {
 			}));
 			this.back();
 		});
+	}
+
+	createPassword(event) {
+		let possibleLetters = "";
+		if (this.uppercaseChecked) {
+			possibleLetters += this.uppercaseLetters;
+		}
+		if (this.lowercaseChecked) {
+			possibleLetters += this.lowercaseLetters;
+		}
+		if (this.numbersChecked) {
+			possibleLetters += this.numbers;
+		}
+		if (this.symbolsChecked) {
+			possibleLetters += this.symbols;
+		}
+		let text = "";
+
+		for (let i = 0; i < event; i++) {
+			text += possibleLetters.charAt(Math.floor(Math.random() * possibleLetters.length));
+		}
+
+		this.passwordField = text;
+
 	}
 
 	back() {

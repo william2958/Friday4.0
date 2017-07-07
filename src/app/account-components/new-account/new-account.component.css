@@ -17,3 +17,18 @@
 .body-textarea:focus {
 	outline: none;
 }
+
+.range-field {
+	width: 80%;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.generatePasswordOptionRow {
+	text-align: center;
+}
+
+.filled-in {
+	padding-left: 5px;
+	padding-right: 5px;
+}

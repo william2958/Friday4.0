@@ -19,7 +19,6 @@ export class AuthEffectService {
 	constructor(
 		private actions$: Actions,
 		private authService: AuthService,
-	    private quicknoteService: QuicknoteService,
 	    private store: Store<ApplicationState>
 	) {}
 

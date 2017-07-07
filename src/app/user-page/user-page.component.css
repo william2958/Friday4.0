@@ -1,0 +1,17 @@
+.user-nav {
+	background-color: #263238;
+}
+
+@media (min-width: 992px) {
+	.user-nav {
+		width: -webkit-calc(100% - 300px);
+		width:    -moz-calc(100% - 300px);
+		width:         calc(100% - 300px);
+	}
+}
+
+@media (max-width: 992px) {
+	.user-nav {
+		width: 100%;
+	}
+}

@@ -57,6 +57,7 @@ import { AccountsListComponent } from './account-components/accounts-list/accoun
 import { AccountsOptionBarComponent } from './account-components/accounts-option-bar/accounts-option-bar.component';
 import { AccountsSearchComponent } from './account-components/accounts-search/accounts-search.component';
 import {PinGuard} from "./shared/guards/pin.guard";
+import { UserPageComponent } from './user-page/user-page.component';
 
 export function storeReducer(state: ApplicationState, action: Action): ApplicationState {
 	return {
@@ -93,7 +94,8 @@ export function storeReducer(state: ApplicationState, action: Action): Applicati
 		Autosize,
 		AccountsListComponent,
 		AccountsOptionBarComponent,
-		AccountsSearchComponent
+		AccountsSearchComponent,
+		UserPageComponent
 	],
 	imports: [
 		BrowserModule,

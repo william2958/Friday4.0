@@ -34,7 +34,8 @@
 }
 
 .hovering {
-	background-color: grey;
+	background-color: lightgray;
+	cursor: pointer;
 }
 
 @media (min-width: 992px) {

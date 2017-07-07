@@ -18,6 +18,9 @@
 			<input type="password" class="validate" id="loginPassword" name="password" formControlName="password">
 			<label for="loginPassword" data-error="Password required.">Password:</label>
 		</div>
+		<div style="text-align: right">
+			<a (click)="forgotPassword()" class="forgot-password-link">Forgot Password?</a>
+		</div>
 
 		<button type="submit" class="btn btn-primary login-button">Login</button>
 	</form>
@@ -54,11 +57,11 @@
 				<label for="signupLastName">Last Name</label>
 			</div>
 			<div class="input-field">
-				<input class="signup-input" type="text" id="signupPassword" name="password" formControlName="password">
+				<input class="signup-input" type="password" id="signupPassword" name="password" formControlName="password">
 				<label for="signupPassword">Password:</label>
 			</div>
 			<div class="input-field">
-				<input class="signup-input" type="text" id="signupConfirmPassword" name="password" formControlName="confirm_password">
+				<input class="signup-input" type="password" id="signupConfirmPassword" name="password" formControlName="confirm_password">
 				<label for="signupConfirmPassword">Confirm Password:</label>
 			</div>
 		<button type="submit" class="btn btn-primary login-button">Sign Up</button>
@@ -86,6 +89,31 @@
 		<div class="pin-button-row">
 			<button type="submit" class="btn btn-primary submit-pin-button">Enter</button>
 			<button (click)="cancelPin()" class="btn btn-primary cancel-pin-button">Cancel</button>
+		</div>
+	</form>
+
+</div>
+
+<!-- Reset Password Modal -->
+<div materialize="modal" [materializeParams]="[{dismissible: false, inDuration: 200}]"
+	 [materializeActions]="forgotModalActions" class="modal forgot-modal">
+	<div class="modal-header">
+		<h4 class="modal-title title">Enter Email</h4>
+		<img (click)="cancelPin()" class="cancelIcon svgIcon" src="assets/images/cancel.svg"/>
+	</div>
+
+
+	<form autocomplete="off" novalidate (submit)="sendResetEmail(forgotInput.value)" class="pin-form">
+		<div class="input-field">
+			<input #forgotInput id="forgot" type="text" class="validate">
+			<label for="forgot">Email</label>
+		</div>
+		<div *ngIf="forgotError" class="pin-error">
+			{{forgotError}}
+		</div>
+		<div class="pin-button-row">
+			<button type="submit" class="btn btn-primary submit-pin-button">Enter</button>
+			<button (click)="close()" class="btn btn-primary cancel-pin-button">Cancel</button>
 		</div>
 	</form>
 

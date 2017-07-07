@@ -3,7 +3,6 @@ import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from "@angular
 import {ApplicationState} from "../../store/application-state";
 import {Store} from "@ngrx/store";
 import {pinSetSelector} from "../../store/selectors/pinSelector";
-import {Observable} from "rxjs/Observable";
 import {ShowPinModalAction} from "../../store/actions/accountActions";
 
 @Injectable()

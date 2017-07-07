@@ -2,9 +2,8 @@ import {ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChan
 import {Store} from "@ngrx/store";
 import {ApplicationState} from "../../store/application-state";
 import {Router} from "@angular/router";
-import {DeleteAccountAction, LoadInitialAccountsAction} from "../../store/actions/accountActions";
+import {DeleteAccountAction} from "../../store/actions/accountActions";
 import * as _ from 'lodash';
-import {ORDER_BY_NEWEST} from "../../services/account.service";
 import {EncryptService} from "../../services/encrypt.service";
 
 @Component({

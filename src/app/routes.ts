@@ -12,6 +12,7 @@ import {NewNoteComponent} from "./note-components/notes-new/notes-new.component"
 import {NoteDetailComponent} from "./note-components/note-detail/note-detail.component";
 import {QuicknotesComponent} from "./quicknote-components/quicknotes/quicknotes.component";
 import {PinGuard} from "./shared/guards/pin.guard";
+import {UserPageComponent} from "./user-page/user-page.component";
 export const routes: Routes = [
 
 	{
@@ -62,6 +63,15 @@ export const routes: Routes = [
 			{
 				path: 'quicknotes',
 				component: QuicknotesComponent
+			},
+			{
+				path: 'user',
+				component: UserPageComponent
+			},
+			{
+				path: '',
+				pathMatch: 'full',
+				redirectTo: 'notes'
 			}
 		]
 	},

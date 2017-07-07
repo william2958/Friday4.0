@@ -139,3 +139,18 @@ img {
 	color: red;
 	text-align: center;
 }
+
+
+/* Forgot Password Modal */
+
+.forgot-modal {
+	width: 400px;
+	height: 350px;
+	margin-top: 20px;
+}
+
+.forgot-password-link {
+	color: red;
+	margin-right: 40px;
+	font-size: 12px;
+}

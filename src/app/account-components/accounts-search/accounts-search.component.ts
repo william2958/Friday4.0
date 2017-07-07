@@ -32,7 +32,7 @@ export class AccountsSearchComponent implements OnInit {
 	search(searchTerms: string) {
 		if (searchTerms !== '') {
 			this.searchResults = _.filter(this.accountKeys, (val) => {
-				return val.value.indexOf(searchTerms) !== -1;
+				return val.value.toLowerCase().indexOf(searchTerms.toLowerCase()) !== -1;
 			});
 		} else {
 			this.searchResults = [];

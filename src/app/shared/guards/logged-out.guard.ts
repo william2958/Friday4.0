@@ -14,12 +14,14 @@ export class LoggedOutGuard implements CanActivate {
 	canActivate() {
 		return this.auth.authState.map((auth) => {
 			if (auth) {
-				// If the user is authenticated then just redirect
-				// to the accounts view. The home canActivate
-				// guard will go and retrieve the firebase user object.
-				// TODO: change this so that it goes to a homepage view
-				this.router.navigate(['/', 'home', 'notes']);
-				return false;
+				if (auth.emailVerified) {
+					// If the user is authenticated then just redirect
+					// to the accounts view. The home canActivate
+					// guard will go and retrieve the firebase user object.
+					// TODO: change this so that it goes to a homepage view
+					this.router.navigate(['/', 'home', 'notes']);
+					return false;
+				}
 			}
 			// If the user is not authenticated, then return true for
 			// them to enter the landing component.
