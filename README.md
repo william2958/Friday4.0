@@ -1,28 +1,9 @@
-# Friday
+# F.R.I.D.A.Y.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.3.
+Currently live on: assistantfriday.com
 
-## Development server
+Friday is a web assistant designed to help keep track of my passwords and various notes and quicknotes. It is a pet project that has always been redone everytime I learned a new technology stack.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Currently Friday is running with an Angular 4.X frontend paired with a Firebase database. This allows me to curcumvent the need to have a server running 24/7 and keeps the cost of this project to a cool 0$.
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+This project was a lot of fun to build and has taught me a lot about the web ecosystem and how to get a website up and running. Was interesting to see an idea turn into an actual working website built from the ground up. 
